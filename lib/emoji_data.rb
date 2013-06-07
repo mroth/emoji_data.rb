@@ -1,8 +1,10 @@
-require "emoji_data/version"
-require "emoji_data/emoji_char"
+require 'emoji_data/version'
+require 'emoji_data/emoji_char'
+require 'json'
 
 module EmojiData
-  EMOJI_MAP = Oj.load_file 'vendor/emoji-data/emoji.json'
+  RAW_JSON = IO.read('vendor/emoji-data/emoji.json')
+  EMOJI_MAP = JSON.parse( RAW_JSON )
   EMOJI_CHARS = EMOJI_MAP.map { |em| EmojiChar.new(em) }
 
   def self.chars
