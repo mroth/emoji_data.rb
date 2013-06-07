@@ -8,11 +8,12 @@ module EmojiData
   EMOJI_CHARS = EMOJI_MAP.map { |em| EmojiChar.new(em) }
 
   def self.chars
-    @chars ||= self.codepoints.map { |cp| Emoji.codepoint_to_char(cp) }
+    EMOJI_CHARS
   end
 
+  #TODO: is the below actually being used? perhaps it can be trashed
   def self.codepoints
-    @codepoints ||= EMOJI_MAP.map { |es| es['unified'] }
+    @codepoints ||= self.chars.map { |c| c['unified'] }
   end
 
   def self.char_to_unified(char)
