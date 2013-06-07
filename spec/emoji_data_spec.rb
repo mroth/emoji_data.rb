@@ -11,6 +11,17 @@ describe EmojiData do
     end
   end
 
+  describe ".find_by_unified" do
+    it "should find the proper EmojiChar object" do
+      results = EmojiData.find_by_unified('1f680')
+      results.should be_kind_of(EmojiChar)
+      results.name.should eq('ROCKET')
+    end
+    it "should normallise capitalization for hex values" do
+      EmojiData.find_by_unified('1f680').should_not be_nil
+    end
+  end
+
   describe ".char_to_unified" do
     it "converts normal emoji to unified codepoint" do
       EmojiData.char_to_unified("👾").should eq('1F47E')

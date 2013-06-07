@@ -29,7 +29,7 @@ module EmojiData
   end
 
   def self.find_by_unified(cp)
-    EMOJI_CHARS.detect { |ec| ec.unified == cp }
+    EMOJI_CHARS.detect { |ec| ec.unified == cp.upcase }
   end
 
   # not sure why the below doesnt work... but maybe fuck reverse compatibility for MYSELF
