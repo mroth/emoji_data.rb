@@ -3,7 +3,8 @@ require 'emoji_data/emoji_char'
 require 'json'
 
 module EmojiData
-  RAW_JSON = IO.read('vendor/emoji-data/emoji.json')
+  GEM_ROOT = File.join(File.dirname(__FILE__), '..')
+  RAW_JSON = IO.read(File.join(GEM_ROOT, 'vendor/emoji-data/emoji.json'))
   EMOJI_MAP = JSON.parse( RAW_JSON )
   EMOJI_CHARS = EMOJI_MAP.map { |em| EmojiChar.new(em) }
 
