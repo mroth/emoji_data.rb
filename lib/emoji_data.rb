@@ -8,13 +8,16 @@ module EmojiData
   EMOJI_MAP = JSON.parse( RAW_JSON )
   EMOJI_CHARS = EMOJI_MAP.map { |em| EmojiChar.new(em) }
 
-  def self.chars
+  def self.all
     EMOJI_CHARS
   end
 
-  #TODO: is the below actually being used? perhaps it can be trashed
+  def self.chars
+    @chars ||= EMOJI_CHARS.map(&:char)
+  end
+
   def self.codepoints
-    @codepoints ||= self.chars.map { |c| c['unified'] }
+    @codepoints ||= EMOJI_CHARS.map(&:unified)
   end
 
   def self.char_to_unified(char)
