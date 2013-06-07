@@ -10,10 +10,12 @@ module EmojiData
       end
     end
 
-    def to_char
+    # Public: Returns a version of the character for rendering to screen.
+    def char
       @char ||= @unified.split('-').map { |i| i.hex }.pack("U*")
     end
 
+    # Public: Is the character represented by a doublebyte unicode codepoint in unicode?
     def doublebyte?
       @unified.match(/-/)
     end

@@ -13,6 +13,7 @@ describe EmojiData do
     end
   end
 
+  # TODO: below is kinda redundant but it is helpful as a helper method so maybe still test
   describe "#unified_to_char" do
     it "converts normal unified codepoints to unicode strings" do
       EmojiData.unified_to_char('1F47E').should eq("👾")

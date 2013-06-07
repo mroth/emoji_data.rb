@@ -20,7 +20,7 @@ module EmojiData
   end
 
   def self.unified_to_char(cp)
-    find_by_unified(cp).to_char
+    find_by_unified(cp).char
   end
 
   def self.find_by_unified(cp)

@@ -20,6 +20,28 @@ describe EmojiChar do
       @poop.short_names.should eq(["hankey","poop","shit"])
       @poop.text.should eq(nil)
     end
+  end
 
+  context "instance methods" do
+    before(:all) do
+      @invader = EmojiChar.new({'unified' => '1F47E'})
+      @usflag = EmojiChar.new({'unified' => '1F1FA-1F1F8'})
+    end
+
+    describe "#char" do
+      it "should render as happy shiny unicode" do
+        @invader.char.should eq("👾")
+      end
+      it "should render as happy shiny unicode for doublebyte chars too" do
+        @usflag.char.should eq("🇺🇸")
+      end
+    end
+
+    describe "#doublebyte?" do
+      it "should indicate when a character is doublebyte based on the unified ID" do
+        @usflag.doublebyte?.should be_true
+        @invader.doublebyte?.should be_false
+      end
+    end
   end
 end
