@@ -1,6 +1,10 @@
-# EmojiData
+# emoji_data.rb
 
-TODO: Write a gem description
+A simple convenience wrapper for iamcal/emoji-data. Provides classes and methods for dealing with emoji character data as unicode.
+
+Note, this is more useful for low-level operations.  If you can avoid having to deal with unicode character data extensively and just want to encode/decode stuff, [rumoji](https://github.com/mwunsch/rumoji) is probably a better bet for you.
+
+This is basically a helper library for [emojitrack](https://github.com/mroth/emojitrack) and [emojistatic](https://github.com/mroth/emojistatic), but may be useful for other people.
 
 ## Installation
 
@@ -20,10 +24,3 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
