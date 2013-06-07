@@ -22,6 +22,30 @@ describe EmojiData do
     end
   end
 
+  describe ".find_by_name" do
+    it "returns an array of results" do
+      EmojiData.find_by_name('tree').should be_kind_of(Array)
+      EmojiData.find_by_name('tree').count.should eq(5)
+    end
+    it "returns [] if nothing is found" do
+      EmojiData.find_by_name('sdlkfjlskdfj').should_not be_nil
+      EmojiData.find_by_name('sdlkfjlskdfj').should be_kind_of(Array)
+      EmojiData.find_by_name('sdlkfjlskdfj').count.should eq(0)
+    end
+  end
+
+  describe ".find_by_short_name" do
+    it "returns an array of results, downcasing if needed" do
+      EmojiData.find_by_short_name('MOON').should be_kind_of(Array)
+      EmojiData.find_by_short_name('MOON').count.should eq(13)
+    end
+    it "returns [] if nothing is found" do
+      EmojiData.find_by_short_name('sdlkfjlskdfj').should_not be_nil
+      EmojiData.find_by_short_name('sdlkfjlskdfj').should be_kind_of(Array)
+      EmojiData.find_by_short_name('sdlkfjlskdfj').count.should eq(0)
+    end
+  end
+
   describe ".char_to_unified" do
     it "converts normal emoji to unified codepoint" do
       EmojiData.char_to_unified("👾").should eq('1F47E')

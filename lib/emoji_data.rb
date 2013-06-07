@@ -32,10 +32,19 @@ module EmojiData
     EMOJI_CHARS.detect { |ec| ec.unified == cp.upcase }
   end
 
-  # not sure why the below doesnt work... but maybe fuck reverse compatibility for MYSELF
-  # self.module_eval do
-  #   alias_method :find_by_codepoint, :find_by_unified
-  #   alias_method :char_to_codepoint, :char_to_unified
-  #   alias_method :codepoint_to_char, :unified_to_char
-  # end
+  def self.find_by_name(name)
+    # self.all.select { |char| char.name.include? name.upcase }
+    self.find_by_value(:name, name.upcase)
+  end
+
+  def self.find_by_short_name(short_name)
+    # self.all.select { |char| char.short_name.include? name.downcase }
+    self.find_by_value(:short_name, short_name.downcase)
+  end
+
+  protected
+  def self.find_by_value(field,value)
+    self.all.select { |char| char.send(field).include? value }
+  end
+
 end
