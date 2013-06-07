@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["mrothenberg@gmail.com"]
   spec.description   = %q{Provides classes and methods for dealing with emoji character data as unicode.}
   spec.summary       = %q{Provides classes and methods for dealing with emoji character data as unicode.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/mroth/emoji_data.rb"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
