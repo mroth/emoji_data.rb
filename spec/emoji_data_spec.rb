@@ -2,6 +2,14 @@
 require 'spec_helper'
 
 describe EmojiData do
+  describe ".chars" do
+    it "should return an array of all known emoji chars" do
+      EmojiData.chars.count.should eq(842)
+    end
+    it "should return all EmojiChar objects" do
+      EmojiData.chars.all? {|char| char.class == EmojiData::EmojiChar}.should be_true
+    end
+  end
 
   describe ".char_to_unified" do
     it "converts normal emoji to unified codepoint" do
