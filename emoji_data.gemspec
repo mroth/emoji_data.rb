@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = EmojiData::VERSION
   spec.authors       = ["Matthew Rothenberg"]
   spec.email         = ["mrothenberg@gmail.com"]
-  spec.description   = %q{A simple convenience wrapper for iamcal/emoji-data. Provides classes and methods for dealing with emoji character data as unicode.}
-  spec.summary       = %q{A simple convenience wrapper for iamcal/emoji-data.}
+  spec.description   = %q{Provides classes and methods for dealing with emoji character data as unicode.}
+  spec.summary       = %q{Provides classes and methods for dealing with emoji character data as unicode.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
