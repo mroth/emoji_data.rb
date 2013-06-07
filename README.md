@@ -1,5 +1,8 @@
 # emoji_data.rb
 
+[![Gem Version](https://badge.fury.io/rb/emoji_data.png)](http://badge.fury.io/rb/emoji_data)
+[![Build Status](https://travis-ci.org/mroth/emoji_data.rb.png?branch=master)](https://travis-ci.org/mroth/emoji_data.rb)
+
 Provides classes and helpers for dealing with emoji character data as unicode.  Wraps a library of all known emoji characters and provides convenience methods.
 
 Note, this is mostly useful for low-level operations.  If you can avoid having to deal with unicode character data extensively and just want to encode/decode stuff, [rumoji](https://github.com/mwunsch/rumoji) might be a better bet for you.
@@ -46,7 +49,7 @@ Some notable methods to call out:
 
  - `EmojiData.char_to_unified(char)` takes a string containing a unified unicode representation of an emoji character and gives you the unicode ID.
 
-		>> EmojiData.char_to_unified('🚀')
+		>> EmojiData.char_to_unified(:rocket:)
 		=> "1F680"
 
  - `EmojiData.all` will return an array of all known EmojiChars, so you can map or do whatever funky Enumerable stuff you want to do across the entire character set.
