@@ -9,7 +9,7 @@ Note, this is mostly useful for low-level operations.  If you can avoid having t
 
 This library currently uses `iamcal/emoji-data` as it's library dataset, and thus considers it to be the "source of truth" regarding certain things, such as how to represent doublebyte unified codepoint IDs as strings (seperated by a dash).
 
-This is basically a helper library for my [emojitrack](https://github.com/mroth/emojitrack) and [emojistatic](https://github.com/mroth/emojistatic), but may be useful for other people.
+This is basically a helper library for my [emojitrack](https://github.com/mroth/emojitrack) and [emojistatic](https://github.com/mroth/emojistatic) projects, but may be useful for other people.
 
 ## Installation
 
