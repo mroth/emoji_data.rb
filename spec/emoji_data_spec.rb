@@ -23,7 +23,7 @@ describe EmojiData do
   end
 
   describe ".find_by_name" do
-    it "returns an array of results" do
+    it "returns an array of results, upcasing input if needed" do
       EmojiData.find_by_name('tree').should be_kind_of(Array)
       EmojiData.find_by_name('tree').count.should eq(5)
     end
@@ -35,7 +35,7 @@ describe EmojiData do
   end
 
   describe ".find_by_short_name" do
-    it "returns an array of results, downcasing if needed" do
+    it "returns an array of results, downcasing input if needed" do
       EmojiData.find_by_short_name('MOON').should be_kind_of(Array)
       EmojiData.find_by_short_name('MOON').count.should eq(13)
     end
