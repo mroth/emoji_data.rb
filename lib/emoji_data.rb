@@ -33,7 +33,8 @@ module EmojiData
   end
 
   def self.find_by_str(str)
-    EMOJI_CHARS.select { |ec| str.include? ec.char }
+    matches = EMOJI_CHARS.select { |ec| str.include? ec.char }
+    matches.sort_by { |matched_char| str.index(matched_char.char) }
   end
 
   def self.find_by_name(name)
