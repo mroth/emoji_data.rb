@@ -29,6 +29,12 @@ describe EmojiChar do
       @usflag = EmojiChar.new({'unified' => '1F1FA-1F1F8'})
     end
 
+    describe "#to_s" do
+      it "should return the unicode char as string as default to_s" do
+        @invader.to_s.should eq(@invader.char)
+      end
+    end
+
     describe "#char" do
       it "should render as happy shiny unicode" do
         @invader.char.should eq("👾")

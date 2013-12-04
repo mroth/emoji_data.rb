@@ -19,6 +19,8 @@ module EmojiData
     def doublebyte?
       @unified.match(/-/)
     end
+
+    alias_method :to_s, :char
   end
 
 end
