@@ -32,6 +32,10 @@ module EmojiData
     EMOJI_CHARS.detect { |ec| ec.unified == cp.upcase }
   end
 
+  def self.find_by_str(str)
+    EMOJI_CHARS.select { |ec| str.include? ec.char }
+  end
+
   def self.find_by_name(name)
     # self.all.select { |char| char.name.include? name.upcase }
     self.find_by_value(:name, name.upcase)

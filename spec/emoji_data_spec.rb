@@ -11,6 +11,29 @@ describe EmojiData do
     end
   end
 
+  describe ".find_by_str" do
+    before(:all) do
+      @exact_results = EmojiData.find_by_str("🚀")
+      @multi_results = EmojiData.find_by_str("flying on my 🚀 to visit the 👾 people.")
+    end
+    it "should find the proper EmojiChar object from a single string char" do
+      @exact_results.should be_kind_of(Array)
+      @exact_results.length.should eq(1)
+      @exact_results.first.should be_kind_of(EmojiChar)
+      @exact_results.first.name.should eq('ROCKET')
+    end
+    it "should match multiple chars from within a string" do
+      @multi_results.should be_kind_of(Array)
+      @multi_results.length.should eq(2)
+      @multi_results[0].should be_kind_of(EmojiChar)
+      @multi_results[1].should be_kind_of(EmojiChar)
+    end
+    it "should return multiple matches in the proper order" do
+      @multi_results[0].name.should eq('ROCKET')
+      @multi_results[1].name.should eq('ALIEN MONSTER')
+    end
+  end
+
   describe ".find_by_unified" do
     it "should find the proper EmojiChar object" do
       results = EmojiData.find_by_unified('1f680')
