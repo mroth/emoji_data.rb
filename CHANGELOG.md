@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.2 (in development)
+## 0.0.2 (3 December 2013)
 
  * Remove JSON gem dependency since no longer supporting Ruby 1.8.7 anyhow.
  * Add `EmojiData.find_by_str` convenience method to match on a string.
