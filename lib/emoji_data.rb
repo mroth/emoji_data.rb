@@ -8,6 +8,9 @@ module EmojiData
   EMOJI_MAP = JSON.parse( RAW_JSON )
   EMOJI_CHARS = EMOJI_MAP.map { |em| EmojiChar.new(em) }
 
+  # hashmap for fast unified lookups
+  EMOJICHAR_UNIFIED_MAP = Hash[EMOJI_CHARS.map { |u| [u.unified, u] }]
+
   def self.all
     EMOJI_CHARS
   end
@@ -29,7 +32,8 @@ module EmojiData
   end
 
   def self.find_by_unified(cp)
-    EMOJI_CHARS.detect { |ec| ec.unified == cp.upcase }
+    # EMOJI_CHARS.detect { |ec| ec.unified == cp.upcase }
+    EMOJICHAR_UNIFIED_MAP[cp.upcase]
   end
 
   def self.find_by_str(str)
