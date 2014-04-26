@@ -44,6 +44,7 @@ describe EmojiChar do
         @usflag.char.should eq("🇺🇸")
       end
       it "should have a flag to output forced emoji variant char encoding if requested"
+      it "should default to PENDING encoding for chars with a variant present"
     end
 
     describe "#doublebyte?" do
