@@ -1,7 +1,11 @@
 # emoji_data.rb
 
-[![Gem Version](https://badge.fury.io/rb/emoji_data.png)](http://badge.fury.io/rb/emoji_data)
-[![Build Status](https://travis-ci.org/mroth/emoji_data.rb.png?branch=master)](https://travis-ci.org/mroth/emoji_data.rb)
+[![Gem Version](http://img.shields.io/gem/v/emoji_data.svg?style=flat)](https://rubygems.org/gems/emoji_data)
+[![Build Status](http://img.shields.io/travis/mroth/emoji_data.rb.svg?style=flat)](https://travis-ci.org/mroth/emoji_data.rb)
+[![Dependency Status](http://img.shields.io/gemnasium/mroth/emoji_data.rb.svg?style=flat)](https://gemnasium.com/mroth/emoji_data.rb)
+[![CodeClimate Status](http://img.shields.io/codeclimate/github/mroth/emoji_data.rb.svg?style=flat)](https://codeclimate.com/github/mroth/emoji_data.rb)
+[![Coverage Status](http://img.shields.io/coveralls/mroth/emoji_data.rb.svg?style=flat)](https://coveralls.io/r/mroth/emoji_data.rb)
+
 
 Provides classes and helpers for dealing with emoji character data as unicode.  Wraps a library of all known emoji characters and provides convenience methods.
 
@@ -64,5 +68,3 @@ Some notable methods to call out:
   `EmojiData::EmojiChar` is a class representing a single emoji character.  All the variables from the `iamcal/emoji-data` dataset have dynamically generated getter methods.
 
 There are some additional convenience methods, such as `#doublebyte?` etc. Most important addition is the `#char` method which will output a properly unicode encoded string containing the character.
-
-
