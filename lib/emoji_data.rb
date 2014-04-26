@@ -63,8 +63,10 @@ module EmojiData
   end
 
   def self.find_by_str(str)
-    matches = EMOJI_CHARS.select { |ec| str.include? ec.char }
-    matches.sort_by { |matched_char| str.index(matched_char.char) }
+    str.extend EmojiData::StringUtils
+
+    matches = EMOJI_CHARS.select { |ec| str.include_any? ec.chars }
+    matches.sort_by { |mc| str.index_first(mc.chars) }
   end
 
   def self.find_by_name(name)
@@ -80,6 +82,19 @@ module EmojiData
   protected
   def self.find_by_value(field,value)
     self.all.select { |char| char.send(field).include? value }
+  end
+
+  module StringUtils
+    def include_any?(charstr)
+      charstr.any? { |char| self.include? char }
+    end
+
+    def index_first(charstr)
+      charstr.each do |char|
+        return self.index(char) if !self.index(char).nil?
+      end
+      nil
+    end
   end
 
 end

@@ -18,6 +18,16 @@ module EmojiData
       EmojiChar::unified_to_char(target)
     end
 
+    # return all known possible string encodings of the emoji char
+    # mostly useful for doing find operations when you need them all
+    def chars
+      results = [self.char]
+      self.variations.each do |variation|
+        results << EmojiChar::unified_to_char(variation)
+      end
+      @chars ||= results
+    end
+
     # Public: Is the character represented by a doublebyte unicode codepoint in unicode?
     def doublebyte?
       @unified.match(/-/)
@@ -37,12 +47,21 @@ module EmojiData
       @variations.first
     end
 
+    #
+    # for some reason the autoinit from json treats empty arrays as nil? override
+    #
+    def variations
+      return [] if @variations.nil?
+      @variations
+    end
+
     alias_method :to_s, :char
 
     protected
     def self.unified_to_char(cps)
       cps.split('-').map { |i| i.hex }.pack("U*")
     end
+
   end
 
 end

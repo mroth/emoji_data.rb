@@ -60,7 +60,8 @@ describe EmojiData do
     before(:all) do
       @exact_results   = EmojiData.find_by_str("🚀")
       @multi_results   = EmojiData.find_by_str("flying on my 🚀 to visit the 👾 people.")
-      @variant_results = EmojiData.find_by_str("\u{231B}\u{FE0F}")
+      @variant_results = EmojiData.find_by_str("\u{0023}\u{FE0F}\u{20E3}")
+      @variant_multi   = EmojiData.find_by_str("first a \u{0023}\u{FE0F}\u{20E3} then a 🚀")
     end
     it "should find the proper EmojiChar object from a single string char" do
       @exact_results.should be_kind_of(Array)
@@ -70,7 +71,7 @@ describe EmojiData do
     end
     it "should find the proper EmojiChar object from a variant encoded char" do
       @variant_results.length.should eq(1)
-      @variant_results.first.name.should eq('HOURGLASS')
+      @variant_results.first.name.should eq('HASH KEY')
     end
     it "should match multiple chars from within a string" do
       @multi_results.should be_kind_of(Array)
@@ -81,6 +82,10 @@ describe EmojiData do
     it "should return multiple matches in the proper order" do
       @multi_results[0].name.should eq('ROCKET')
       @multi_results[1].name.should eq('ALIEN MONSTER')
+    end
+    it "should return multiple matches in the proper order for variant encodings" do
+      @variant_multi[0].name.should eq('HASH KEY')
+      @variant_multi[1].name.should eq('ROCKET')
     end
   end
 

@@ -54,6 +54,13 @@ describe EmojiChar do
       it "should default to PENDING encoding for chars with a variant present"
     end
 
+    describe "#chars" do
+      it "should return an array of all possible string render variations" do
+        @invader.chars.should eq(["\u{1F47E}"])
+        @cloud.chars.should   eq(["\u{2601}","\u{2601}\u{FE0F}"])
+      end
+    end
+
     describe "#doublebyte?" do
       it "should indicate when a character is doublebyte based on the unified ID" do
         @usflag.doublebyte?.should be_true
