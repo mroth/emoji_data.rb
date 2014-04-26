@@ -29,6 +29,7 @@ describe EmojiChar do
       @invader   = EmojiChar.new({'unified' => '1F47E'})
       @usflag    = EmojiChar.new({'unified' => '1F1FA-1F1F8'})
       @hourglass = EmojiChar.new({'unified' => '231B', 'variations' => ['231B-FE0F']})
+      @cloud     = EmojiChar.new({'unified' => '2601', 'variations' => ['2601-FE0F']})
     end
 
     describe "#to_s" do
@@ -44,7 +45,12 @@ describe EmojiChar do
       it "should render as happy shiny unicode for doublebyte chars too" do
         @usflag.char.should eq("🇺🇸")
       end
-      it "should have a flag to output forced emoji variant char encoding if requested"
+      it "should have a flag to output forced emoji variant char encoding if requested" do
+        @cloud.char(    {variant_encoding: false}).should eq("\u{2601}")
+        @cloud.char(    {variant_encoding:  true}).should eq("\u{2601}\u{FE0F}")
+        @invader.char(  {variant_encoding: false}).should eq("\u{1F47E}")
+        @invader.char(  {variant_encoding:  true}).should eq("\u{1F47E}")
+      end
       it "should default to PENDING encoding for chars with a variant present"
     end
 

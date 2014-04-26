@@ -11,8 +11,11 @@ module EmojiData
     end
 
     # Public: Returns a version of the character for rendering to screen.
-    def char
-      @char ||= @unified.split('-').map { |i| i.hex }.pack("U*")
+    def char(options = {})
+      options = {variant_encoding: false}.merge(options)
+      #decide whether to use the normal unified ID or the variant for encoding to str
+      target = (self.variant? && options[:variant_encoding]) ? self.variant : @unified
+      target.split('-').map { |i| i.hex }.pack("U*")
     end
 
     # Public: Is the character represented by a doublebyte unicode codepoint in unicode?
