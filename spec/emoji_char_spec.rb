@@ -4,18 +4,19 @@ require 'spec_helper'
 describe EmojiChar do
   describe ".new" do
     before(:all) do
-      poop_json = %q/{"name":"PILE OF POO","unified":"1F4A9","docomo":"","au":"E4F5","softbank":"E05A","google":"FE4F4","image":"1f4a9.png","sheet_x":13,"sheet_y":19,"short_name":"hankey","short_names":["hankey","poop","shit"],"text":null}/
+      poop_json = %q/{"name":"PILE OF POO","unified":"1F4A9","variations":[],"docomo":"","au":"E4F5","softbank":"E05A","google":"FE4F4","image":"1f4a9.png","sheet_x":11,"sheet_y":19,"short_name":"hankey","short_names":["hankey","poop","shit"],"text":null}/
       @poop = EmojiChar.new(JSON.parse poop_json)
     end
     it "should create instance getters for all key-values in emoji.json, with blanks as nil" do
       @poop.name.should eq('PILE OF POO')
       @poop.unified.should eq('1F4A9')
+      @poop.variations.should eq([])
       @poop.docomo.should eq('')
       @poop.au.should eq('E4F5')
       @poop.softbank.should eq('E05A')
       @poop.google.should eq('FE4F4')
       @poop.image.should eq('1f4a9.png')
-      @poop.sheet_x.should eq(13)
+      @poop.sheet_x.should eq(11)
       @poop.sheet_y.should eq(19)
       @poop.short_name.should eq('hankey')
       @poop.short_names.should eq(["hankey","poop","shit"])
@@ -42,6 +43,7 @@ describe EmojiChar do
       it "should render as happy shiny unicode for doublebyte chars too" do
         @usflag.char.should eq("🇺🇸")
       end
+      it "should have a flag to output forced emoji variant char encoding if requested"
     end
 
     describe "#doublebyte?" do
@@ -49,6 +51,15 @@ describe EmojiChar do
         @usflag.doublebyte?.should be_true
         @invader.doublebyte?.should be_false
       end
+    end
+
+    describe "#variant?" do
+      it "should indicate when a character has an alternate variant encoding"
+    end
+
+    describe "#variant" do
+      it "should return the most likely variant encoding for the char"
+      it "should return null if no variant encoding for the char exists"
     end
   end
 end
