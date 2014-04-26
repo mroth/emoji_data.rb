@@ -2,6 +2,11 @@ module EmojiData
 
   class EmojiChar
     def initialize(emoji_hash)
+      # work around inconsistency in emoji.json for now by just setting a blank
+      # array for instance value, and let it get overriden in main
+      # deserialization loop if variable is present.
+      @variations = []
+
       # http://stackoverflow.com/questions/1615190/declaring-instance-variables-iterating-over-a-hash
       emoji_hash.each do |k,v|
         instance_variable_set("@#{k}",v)
@@ -22,7 +27,7 @@ module EmojiData
     # mostly useful for doing find operations when you need them all
     def chars
       results = [self.char]
-      self.variations.each do |variation|
+      @variations.each do |variation|
         results << EmojiChar::unified_to_char(variation)
       end
       @chars ||= results
@@ -35,7 +40,6 @@ module EmojiData
 
     # does the emojichar have an alternate variant encoding?
     def variant?
-      return false if @variations.nil?
       @variations.length > 0
     end
 
@@ -43,16 +47,7 @@ module EmojiData
     # for now, there can only be one, so just return first.
     # (in the future, there may be multiple variants, who knows!)
     def variant
-      return nil if @variations.nil?
       @variations.first
-    end
-
-    #
-    # for some reason the autoinit from json treats empty arrays as nil? override
-    #
-    def variations
-      return [] if @variations.nil?
-      @variations
     end
 
     alias_method :to_s, :char
