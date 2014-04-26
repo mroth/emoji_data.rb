@@ -15,7 +15,7 @@ module EmojiData
       options = {variant_encoding: false}.merge(options)
       #decide whether to use the normal unified ID or the variant for encoding to str
       target = (self.variant? && options[:variant_encoding]) ? self.variant : @unified
-      target.split('-').map { |i| i.hex }.pack("U*")
+      EmojiChar::unified_to_char(target)
     end
 
     # Public: Is the character represented by a doublebyte unicode codepoint in unicode?
@@ -38,6 +38,11 @@ module EmojiData
     end
 
     alias_method :to_s, :char
+
+    protected
+    def self.unified_to_char(cps)
+      cps.split('-').map { |i| i.hex }.pack("U*")
+    end
   end
 
 end

@@ -100,7 +100,9 @@ describe EmojiData do
       EmojiData.char_to_unified("🇺🇸").should eq('1F1FA-1F1F8')
       EmojiData.char_to_unified("#⃣").should eq('0023-20E3')
     end
-    it "converts variant encoded emoji to canonical unified codepoint"
+    it "converts variant encoded emoji to variant unified codepoint" do
+      EmojiData.char_to_unified("\u{2601}\u{FE0F}").should eq('2601-FE0F')
+    end
   end
 
   # TODO: below is kinda redundant but it is helpful as a helper method so maybe still test

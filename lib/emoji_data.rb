@@ -44,7 +44,7 @@ module EmojiData
   end
 
   def self.unified_to_char(cp)
-    find_by_unified(cp).char
+    EmojiChar::unified_to_char(cp)
   end
 
   def self.find_by_unified(cp)
