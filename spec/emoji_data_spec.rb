@@ -12,7 +12,9 @@ describe EmojiData do
   end
 
   describe ".all_with_variants" do
-    it "should return an array of all 107 known emoji chars with variant encoding"
+    it "should return an array of all 107 known emoji chars with variant encoding" do
+      EmojiData.all_with_variants.count.should eq(107)
+    end
   end
 
   describe ".find_by_str" do
@@ -45,10 +47,14 @@ describe EmojiData do
       results.should be_kind_of(EmojiChar)
       results.name.should eq('ROCKET')
     end
-    it "should normallise capitalization for hex values" do
+    it "should normalise capitalization for hex values" do
       EmojiData.find_by_unified('1f680').should_not be_nil
     end
-    it "should find via variant encoding ID format as well"
+    it "should find via variant encoding ID format as well" do
+      results = EmojiData.find_by_unified('2764-fe0f')
+      results.should_not be_nil
+      results.name.should eq('HEAVY BLACK HEART')
+    end
   end
 
   describe ".find_by_name" do
@@ -97,6 +103,8 @@ describe EmojiData do
       EmojiData.unified_to_char('1F1FA-1F1F8').should eq("🇺🇸")
       EmojiData.unified_to_char('0023-20E3').should eq("#⃣")
     end
-    it "converts variant unified codepoints to unicode strings"
+    it "converts variant unified codepoints to unicode strings" do
+      EmojiData.unified_to_char('2764-fe0f').should eq("\u{2764}\u{FE0F}")
+    end
   end
 end
