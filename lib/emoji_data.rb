@@ -15,6 +15,10 @@ module EmojiData
     EMOJI_CHARS
   end
 
+  def self.all_with_variants
+    EMOJI_CHARS.select(&:variant?)
+  end
+
   def self.chars
     @chars ||= EMOJI_CHARS.map(&:char)
   end

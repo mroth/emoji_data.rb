@@ -12,7 +12,7 @@ describe EmojiData do
   end
 
   describe ".all_with_variants" do
-    it "should return an array of all 107 known emoji chars with variant encoding" do
+    it "should return an array of all 107 known emoji chars with variant encodings" do
       EmojiData.all_with_variants.count.should eq(107)
     end
   end
