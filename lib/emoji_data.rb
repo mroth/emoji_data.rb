@@ -8,8 +8,16 @@ module EmojiData
   EMOJI_MAP = JSON.parse( RAW_JSON )
   EMOJI_CHARS = EMOJI_MAP.map { |em| EmojiChar.new(em) }
 
-  # hashmap for fast unified lookups
+  #
+  # construct hashmap for fast precached lookups for `.find_by_unified`
+  #
   EMOJICHAR_UNIFIED_MAP = Hash[EMOJI_CHARS.map { |u| [u.unified, u] }]
+  # merge variant encodings into map so we can look them up as well
+  EMOJI_CHARS.select(&:variant?).each do |char|
+    char.variations.each do |variant|
+      EMOJICHAR_UNIFIED_MAP.merge! Hash[variant,char]
+    end
+  end
 
   def self.all
     EMOJI_CHARS
