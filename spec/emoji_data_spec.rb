@@ -23,6 +23,39 @@ describe EmojiData do
     end
   end
 
+  describe ".chars" do
+    it "should return an array of all chars in unicode string format" do
+      EmojiData.chars.all? {|char| char.class == String}.should be_true
+    end
+    it "should by default return one entry per known EmojiChar" do
+      EmojiData.chars.count.should eq(EmojiData.all.count)
+    end
+    it "should include variants in list when options {include_variants: true}" do
+      results = EmojiData.chars({include_variants: true})
+      numChars    = EmojiData.all.count
+      numVariants = EmojiData.all_with_variants.count
+      results.count.should eq(numChars + numVariants)
+    end
+    it "should not have any duplicates in list when variants are included" do
+      results = EmojiData.chars({include_variants: true})
+      results.count.should eq(results.uniq.count)
+    end
+  end
+
+  describe ".codepoints" do
+    it "should return an array of all known codepoints in dashed string representation" do
+      EmojiData.codepoints.all? {|cp| cp.class == String}.should be_true
+      EmojiData.codepoints.all? {|cp| cp.match(/^[0-9A-F\-]{4,11}$/)}.should be_true
+    end
+    it "should include variants in list when options {include_variants: true}" do
+      results = EmojiData.codepoints({include_variants: true})
+      numChars    = EmojiData.all.count
+      numVariants = EmojiData.all_with_variants.count
+      results.count.should eq(numChars + numVariants)
+      results.all? {|cp| cp.match(/^[0-9A-F\-]{4,16}$/)}.should be_true
+    end
+  end
+
   describe ".find_by_str" do
     before(:all) do
       @exact_results   = EmojiData.find_by_str("🚀")

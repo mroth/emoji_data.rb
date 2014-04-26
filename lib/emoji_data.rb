@@ -31,12 +31,22 @@ module EmojiData
     EMOJI_CHARS.select(&:variant?)
   end
 
-  def self.chars
-    @chars ||= EMOJI_CHARS.map(&:char)
+  def self.chars(options={})
+    options = {include_variants: false}.merge(options)
+
+    if options[:include_variants]
+      return EMOJI_CHARS.map(&:char) + self.all_with_variants.map {|c| c.char({variant_encoding: true})}
+    end
+    EMOJI_CHARS.map(&:char)
   end
 
-  def self.codepoints
-    @codepoints ||= EMOJI_CHARS.map(&:unified)
+  def self.codepoints(options={})
+    options = {include_variants: false}.merge(options)
+
+    if options[:include_variants]
+      return EMOJI_CHARS.map(&:unified) + self.all_with_variants.map {|c| c.variant}
+    end
+    EMOJI_CHARS.map(&:unified)
   end
 
   def self.char_to_unified(char)
