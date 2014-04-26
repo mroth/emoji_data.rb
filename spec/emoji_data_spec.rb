@@ -11,6 +11,12 @@ describe EmojiData do
     end
   end
 
+  describe ".all_doublebyte" do
+    it "should return an array of all 21 known emoji chars with doublebyte encoding" do
+      EmojiData.all_doublebyte.count.should eq(21)
+    end
+  end
+
   describe ".all_with_variants" do
     it "should return an array of all 107 known emoji chars with variant encodings" do
       EmojiData.all_with_variants.count.should eq(107)

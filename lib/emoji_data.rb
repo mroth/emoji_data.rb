@@ -15,6 +15,10 @@ module EmojiData
     EMOJI_CHARS
   end
 
+  def self.all_doublebyte
+    EMOJI_CHARS.select(&:doublebyte?)
+  end
+
   def self.all_with_variants
     EMOJI_CHARS.select(&:variant?)
   end
