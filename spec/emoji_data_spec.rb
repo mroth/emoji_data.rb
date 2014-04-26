@@ -19,8 +19,9 @@ describe EmojiData do
 
   describe ".find_by_str" do
     before(:all) do
-      @exact_results = EmojiData.find_by_str("🚀")
-      @multi_results = EmojiData.find_by_str("flying on my 🚀 to visit the 👾 people.")
+      @exact_results   = EmojiData.find_by_str("🚀")
+      @multi_results   = EmojiData.find_by_str("flying on my 🚀 to visit the 👾 people.")
+      @variant_results = EmojiData.find_by_str("\u{231B}\u{FE0F}")
     end
     it "should find the proper EmojiChar object from a single string char" do
       @exact_results.should be_kind_of(Array)
@@ -28,7 +29,10 @@ describe EmojiData do
       @exact_results.first.should be_kind_of(EmojiChar)
       @exact_results.first.name.should eq('ROCKET')
     end
-    it "should find the proper EmojiChar object from a variant encoded char"
+    it "should find the proper EmojiChar object from a variant encoded char" do
+      @variant_results.length.should eq(1)
+      @variant_results.first.name.should eq('HOURGLASS')
+    end
     it "should match multiple chars from within a string" do
       @multi_results.should be_kind_of(Array)
       @multi_results.length.should eq(2)

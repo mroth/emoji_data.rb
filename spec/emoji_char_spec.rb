@@ -26,8 +26,9 @@ describe EmojiChar do
 
   context "instance methods" do
     before(:all) do
-      @invader = EmojiChar.new({'unified' => '1F47E'})
-      @usflag = EmojiChar.new({'unified' => '1F1FA-1F1F8'})
+      @invader   = EmojiChar.new({'unified' => '1F47E'})
+      @usflag    = EmojiChar.new({'unified' => '1F1FA-1F1F8'})
+      @hourglass = EmojiChar.new({'unified' => '231B', 'variations' => ['231B-FE0F']})
     end
 
     describe "#to_s" do
@@ -55,12 +56,19 @@ describe EmojiChar do
     end
 
     describe "#variant?" do
-      it "should indicate when a character has an alternate variant encoding"
+      it "should indicate when a character has an alternate variant encoding" do
+        @hourglass.variant?.should be_true
+        @usflag.variant?.should be_false
+      end
     end
 
     describe "#variant" do
-      it "should return the most likely variant encoding for the char"
-      it "should return null if no variant encoding for the char exists"
+      it "should return the most likely variant encoding ID representation for the char" do
+        @hourglass.variant.should eq('231B-FE0F')
+      end
+      it "should return nil if no variant encoding for the char exists" do
+        @usflag.variant.should be_nil
+      end
     end
   end
 end
