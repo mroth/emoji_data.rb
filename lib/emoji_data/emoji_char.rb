@@ -20,6 +20,20 @@ module EmojiData
       @unified.match(/-/)
     end
 
+    # does the emojichar have an alternate variant encoding?
+    def variant?
+      return false if @variations.nil?
+      @variations.length > 0
+    end
+
+    # return whatever is the most likely variant ID for the emojichar
+    # for now, there can only be one, so just return first.
+    # (in the future, there may be multiple variants, who knows!)
+    def variant
+      return nil if @variations.nil?
+      @variations.first
+    end
+
     alias_method :to_s, :char
   end
 
