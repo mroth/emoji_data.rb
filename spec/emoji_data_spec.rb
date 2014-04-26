@@ -106,5 +106,8 @@ describe EmojiData do
     it "converts variant unified codepoints to unicode strings" do
       EmojiData.unified_to_char('2764-fe0f').should eq("\u{2764}\u{FE0F}")
     end
+    it "converts variant+doublebyte chars (triplets!) to unicode strings" do
+      EmojiData.unified_to_char('0030-FE0F-20E3').should eq("\u{0030}\u{FE0F}\u{20E3}")
+    end
   end
 end
