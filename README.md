@@ -9,9 +9,9 @@
 
 Provides classes and helpers for dealing with emoji character data as unicode.  Wraps a library of all known emoji characters and provides convenience methods.
 
-Note, this is mostly useful for low-level operations.  If you can avoid having to deal with unicode character data extensively and just want to encode/decode stuff, [rumoji](https://github.com/mwunsch/rumoji) might be a better bet for you.
+Note, this is mostly useful for low-level operations.  If you can avoid having to deal with unicode character data extensively and just want to encode/decode stuff, [rumoji](https://github.com/mwunsch/rumoji) might be a better bet for you.  If however, you are doing anything complicated involving emoji encoding/decoding, or you are just obsessed with understanding the details, this library is your new best friend.
 
-This library currently uses `iamcal/emoji-data` as it's library dataset, and thus considers it to be the "source of truth" regarding certain things, such as how to represent doublebyte unified codepoint IDs as strings (seperated by a dash).
+This library currently uses `iamcal/emoji-data` as it's dataset, and thus considers it to be the "source of truth" regarding certain things, such as how to represent doublebyte unified codepoint IDs as strings (seperated by a dash).
 
 This is basically a helper library for my [emojitrack](https://github.com/mroth/emojitrack) and [emojistatic](https://github.com/mroth/emojistatic) projects, but may be useful for other people.
 
@@ -29,7 +29,7 @@ Or install it yourself as:
 
     $ gem install emoji_data
 
-Currently requires Ruby 1.9 or more recent.
+Currently requires `RUBY_VERSION >= 1.9.2`.
 
 ## Library Usage
 

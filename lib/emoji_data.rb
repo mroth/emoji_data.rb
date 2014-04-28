@@ -61,7 +61,6 @@ module EmojiData
   end
 
   def self.find_by_unified(cp)
-    # EMOJI_CHARS.detect { |ec| ec.unified == cp.upcase }
     EMOJICHAR_UNIFIED_MAP[cp.upcase]
   end
 
@@ -73,12 +72,10 @@ module EmojiData
   end
 
   def self.find_by_name(name)
-    # self.all.select { |char| char.name.include? name.upcase }
     self.find_by_value(:name, name.upcase)
   end
 
   def self.find_by_short_name(short_name)
-    # self.all.select { |char| char.short_name.include? name.downcase }
     self.find_by_value(:short_name, short_name.downcase)
   end
 

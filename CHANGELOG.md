@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0 (Pending)
+
+ * Add support for Unicode variant encodings, used by MacOSX 10.9 / iOS 7.
+   - For more info: http://www.unicode.org/L2/L2011/11438-emoji-var.pdf
+   - By default, `EmojiChar.to_s()` and `.char()` will now use the variant encoding.
+ * Import latest version of iamcal/emoji-data.
+ * 100% test coverage. :sunglasses:
+
 ## 0.0.3 (1 April 2013)
 
  * On initialization, create hashmaps to cache lookups for `.find_by_unified()`.
