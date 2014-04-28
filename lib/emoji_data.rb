@@ -34,10 +34,13 @@ module EmojiData
   def self.chars(options={})
     options = {include_variants: false}.merge(options)
 
+    normals = EMOJI_CHARS.map { |c| c.char({variant_encoding: false}) }
+    extras  = self.all_with_variants.map { |c| c.char({variant_encoding: true}) }
+
     if options[:include_variants]
-      return EMOJI_CHARS.map(&:char) + self.all_with_variants.map {|c| c.char({variant_encoding: true})}
+      return normals + extras
     end
-    EMOJI_CHARS.map(&:char)
+    normals
   end
 
   def self.codepoints(options={})

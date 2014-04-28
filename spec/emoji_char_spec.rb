@@ -51,7 +51,10 @@ describe EmojiChar do
         @invader.char(  {variant_encoding: false}).should eq("\u{1F47E}")
         @invader.char(  {variant_encoding:  true}).should eq("\u{1F47E}")
       end
-      it "should default to PENDING encoding for chars with a variant present"
+      it "should default to variant encoding for chars with a variant present" do
+        @cloud.char.should eq("\u{2601}\u{FE0F}")
+        @hourglass.char.should eq("\u{231B}\u{FE0F}")
+      end
     end
 
     describe "#chars" do

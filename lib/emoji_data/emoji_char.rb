@@ -15,18 +15,21 @@ module EmojiData
       end
     end
 
-    # Public: Returns a version of the character for rendering to screen.
+    # Returns a version of the character for rendering to screen.
+    #
+    # By default this will now use the variant encoding if it exists.
     def char(options = {})
-      options = {variant_encoding: false}.merge(options)
+      options = {variant_encoding: true}.merge(options)
       #decide whether to use the normal unified ID or the variant for encoding to str
       target = (self.variant? && options[:variant_encoding]) ? self.variant : @unified
       EmojiChar::unified_to_char(target)
     end
 
-    # return all known possible string encodings of the emoji char
-    # mostly useful for doing find operations when you need them all
+    # Return ALL known possible string encodings of the emoji char.
+    #
+    # Mostly useful for doing find operations when you need them all.
     def chars
-      results = [self.char]
+      results = [self.char({variant_encoding: false})]
       @variations.each do |variation|
         results << EmojiChar::unified_to_char(variation)
       end
