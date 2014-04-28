@@ -3,8 +3,8 @@ require 'spec_helper'
 
 describe EmojiData do
   describe ".all" do
-    it "should return an array of all known emoji chars" do
-      EmojiData.all.count.should eq(842)
+    it "should return an array of all 845 known emoji chars" do
+      EmojiData.all.count.should eq(845)
     end
     it "should return all EmojiChar objects" do
       EmojiData.all.all? {|char| char.class == EmojiData::EmojiChar}.should be_true
