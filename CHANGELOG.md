@@ -1,6 +1,15 @@
 # Changelog
 
-## 0.0.3 (1 April 2013)
+## 0.1.0 (3 May 2014)
+
+ * Add support for Unicode variant encodings, used by MacOSX 10.9 / iOS 7.
+   - For more info: http://www.unicode.org/L2/L2011/11438-emoji-var.pdf
+   - By default, `EmojiChar.to_s()` and `.char()` will now use the variant encoding.
+ * With adding support for variants, the speed of `find_by_str` regressed by approximately 20% (because there are more codepoints to match against). To counter this, we switched to a Regex based scan than improves performance of the method by over 250x(!).  A complete sorted search against 1000 strings now takes ~2ms where before it would take around a half second.
+ * Import latest version of iamcal/emoji-data.
+ * 100% test coverage. :sunglasses:
+
+## 0.0.3 (1 April 2014)
 
  * On initialization, create hashmaps to cache lookups for `.find_by_unified()`.
 

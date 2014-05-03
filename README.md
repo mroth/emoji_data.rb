@@ -1,13 +1,17 @@
 # emoji_data.rb
 
-[![Gem Version](https://badge.fury.io/rb/emoji_data.png)](http://badge.fury.io/rb/emoji_data)
-[![Build Status](https://travis-ci.org/mroth/emoji_data.rb.png?branch=master)](https://travis-ci.org/mroth/emoji_data.rb)
+[![Gem Version](http://img.shields.io/gem/v/emoji_data.svg?style=flat)](https://rubygems.org/gems/emoji_data)
+[![Build Status](http://img.shields.io/travis/mroth/emoji_data.rb.svg?style=flat)](https://travis-ci.org/mroth/emoji_data.rb)
+[![Dependency Status](http://img.shields.io/gemnasium/mroth/emoji_data.rb.svg?style=flat)](https://gemnasium.com/mroth/emoji_data.rb)
+[![CodeClimate Status](http://img.shields.io/codeclimate/github/mroth/emoji_data.rb.svg?style=flat)](https://codeclimate.com/github/mroth/emoji_data.rb)
+[![Coverage Status](http://img.shields.io/coveralls/mroth/emoji_data.rb.svg?style=flat)](https://coveralls.io/r/mroth/emoji_data.rb)
+
 
 Provides classes and helpers for dealing with emoji character data as unicode.  Wraps a library of all known emoji characters and provides convenience methods.
 
-Note, this is mostly useful for low-level operations.  If you can avoid having to deal with unicode character data extensively and just want to encode/decode stuff, [rumoji](https://github.com/mwunsch/rumoji) might be a better bet for you.
+Note, this is mostly useful for low-level operations.  If you can avoid having to deal with unicode character data extensively and just want to encode/decode stuff, [rumoji](https://github.com/mwunsch/rumoji) might be a better bet for you.  If however, you are doing anything complicated involving emoji encoding/decoding, or you are just obsessed with understanding the details, this library is your new best friend.
 
-This library currently uses `iamcal/emoji-data` as it's library dataset, and thus considers it to be the "source of truth" regarding certain things, such as how to represent doublebyte unified codepoint IDs as strings (seperated by a dash).
+This library currently uses `iamcal/emoji-data` as it's dataset, and thus considers it to be the "source of truth" regarding certain things, such as how to represent doublebyte unified codepoint IDs as strings (seperated by a dash).
 
 This is basically a helper library for my [emojitrack](https://github.com/mroth/emojitrack) and [emojistatic](https://github.com/mroth/emojistatic) projects, but may be useful for other people.
 
@@ -25,7 +29,7 @@ Or install it yourself as:
 
     $ gem install emoji_data
 
-Currently requires Ruby 1.9 or more recent.
+Currently requires `RUBY_VERSION >= 1.9.2`.
 
 ## Library Usage
 
@@ -64,5 +68,3 @@ Some notable methods to call out:
   `EmojiData::EmojiChar` is a class representing a single emoji character.  All the variables from the `iamcal/emoji-data` dataset have dynamically generated getter methods.
 
 There are some additional convenience methods, such as `#doublebyte?` etc. Most important addition is the `#char` method which will output a properly unicode encoded string containing the character.
-
-
