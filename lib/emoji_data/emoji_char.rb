@@ -41,7 +41,7 @@ module EmojiData
 
     # Public: Is the character represented by a doublebyte unicode codepoint in unicode?
     def doublebyte?
-      @unified.match(/-/)
+      @unified.include? "-"
     end
 
     # does the emojichar have an alternate variant encoding?
