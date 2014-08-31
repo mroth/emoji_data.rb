@@ -6,7 +6,7 @@
 [![CodeClimate Status](http://img.shields.io/codeclimate/github/mroth/emoji_data.rb.svg?style=flat)](https://codeclimate.com/github/mroth/emoji_data.rb)
 [![Coverage Status](http://img.shields.io/coveralls/mroth/emoji_data.rb.svg?style=flat)](https://coveralls.io/r/mroth/emoji_data.rb)
 
-A Ruby library providing low level operations for dealing with Emoji
+Ruby library providing low level operations for dealing with Emoji
 glyphs in the Unicode standard. :cool:
 
 EmojiData is like a swiss-army knife for dealing with Emoji encoding issues. If
