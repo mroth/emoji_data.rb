@@ -38,22 +38,28 @@ describe EmojiChar do
       end
     end
 
-    describe "#char" do
+    describe "#render" do
       it "should render as happy shiny unicode" do
-        @invader.char.should eq("👾")
+        @invader.render.should eq("👾")
       end
       it "should render as happy shiny unicode for doublebyte chars too" do
-        @usflag.char.should eq("🇺🇸")
+        @usflag.render.should eq("🇺🇸")
       end
       it "should have a flag to output forced emoji variant char encoding if requested" do
-        @cloud.char(    {variant_encoding: false}).should eq("\u{2601}")
-        @cloud.char(    {variant_encoding:  true}).should eq("\u{2601}\u{FE0F}")
-        @invader.char(  {variant_encoding: false}).should eq("\u{1F47E}")
-        @invader.char(  {variant_encoding:  true}).should eq("\u{1F47E}")
+        @cloud.render(    {variant_encoding: false}).should eq("\u{2601}")
+        @cloud.render(    {variant_encoding:  true}).should eq("\u{2601}\u{FE0F}")
+        @invader.render(  {variant_encoding: false}).should eq("\u{1F47E}")
+        @invader.render(  {variant_encoding:  true}).should eq("\u{1F47E}")
       end
       it "should default to variant encoding for chars with a variant present" do
-        @cloud.char.should eq("\u{2601}\u{FE0F}")
-        @hourglass.char.should eq("\u{231B}\u{FE0F}")
+        @cloud.render.should eq("\u{2601}\u{FE0F}")
+        @hourglass.render.should eq("\u{231B}\u{FE0F}")
+      end
+    end
+
+    describe "#char - DEPRECATED" do
+      it "should maintain compatibility with old method name for .render" do
+        @cloud.char.should eq(@cloud.render)
       end
     end
 

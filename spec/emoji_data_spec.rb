@@ -56,12 +56,12 @@ describe EmojiData do
     end
   end
 
-  describe ".find_by_str" do
+  describe ".scan" do
     before(:all) do
-      @exact_results   = EmojiData.find_by_str("🚀")
-      @multi_results   = EmojiData.find_by_str("flying on my 🚀 to visit the 👾 people.")
-      @variant_results = EmojiData.find_by_str("\u{0023}\u{FE0F}\u{20E3}")
-      @variant_multi   = EmojiData.find_by_str("first a \u{0023}\u{FE0F}\u{20E3} then a 🚀")
+      @exact_results   = EmojiData.scan("🚀")
+      @multi_results   = EmojiData.scan("flying on my 🚀 to visit the 👾 people.")
+      @variant_results = EmojiData.scan("\u{0023}\u{FE0F}\u{20E3}")
+      @variant_multi   = EmojiData.scan("first a \u{0023}\u{FE0F}\u{20E3} then a 🚀")
     end
     it "should find the proper EmojiChar object from a single string char" do
       @exact_results.should be_kind_of(Array)
@@ -89,19 +89,31 @@ describe EmojiData do
     end
   end
 
-  describe ".find_by_unified" do
+  describe ".find_by_str - DEPRECATED" do
+    it "should maintain compatibility with old method name for .scan" do
+      EmojiData.find_by_str("\u{0023}\u{FE0F}\u{20E3}").should eq(EmojiData.scan("\u{0023}\u{FE0F}\u{20E3}"))
+    end
+  end
+
+  describe ".from_unified" do
     it "should find the proper EmojiChar object" do
-      results = EmojiData.find_by_unified('1f680')
+      results = EmojiData.from_unified('1f680')
       results.should be_kind_of(EmojiChar)
       results.name.should eq('ROCKET')
     end
     it "should normalise capitalization for hex values" do
-      EmojiData.find_by_unified('1f680').should_not be_nil
+      EmojiData.from_unified('1f680').should_not be_nil
     end
     it "should find via variant encoding ID format as well" do
-      results = EmojiData.find_by_unified('2764-fe0f')
+      results = EmojiData.from_unified('2764-fe0f')
       results.should_not be_nil
       results.name.should eq('HEAVY BLACK HEART')
+    end
+  end
+
+  describe ".find_by_unified - DEPRECATED" do
+    it "should maintain compatibility with old method name for .from_unified" do
+      EmojiData.find_by_unified('1f680').should eq(EmojiData.from_unified('1f680'))
     end
   end
 

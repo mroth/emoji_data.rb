@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.0 (TBD)
+
+ * Rename a number of methods to be clearer and more consistent with that they
+   actually do:
+     - `EmojiChar.char` → `EmojiChar.render`
+     - `EmojiData.find_by_unified` → `EmojiData.from_unified`
+     - `EmojiData.find_by_str` → `EmojiData.scan`
+
+   Don't worry, the old names are still aliased in so you don't have to change
+   anything in your existing code.  This change is make things clearer for
+   people new to the library.
+
 ## 0.1.0 (3 May 2014)
 
  * Add support for Unicode variant encodings, used by MacOSX 10.9 / iOS 7.

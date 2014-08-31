@@ -9,10 +9,9 @@ module EmojiData
   EMOJI_CHARS = EMOJI_MAP.map { |em| EmojiChar.new(em) }
 
   #
-  # construct hashmap for fast precached lookups for `.find_by_unified`
+  # construct hashmap for fast precached lookups for `.from_unified`
   #
   EMOJICHAR_UNIFIED_MAP = Hash[EMOJI_CHARS.map { |u| [u.unified, u] }]
-  # merge variant encodings into map so we can look them up as well
   EMOJI_CHARS.select(&:variant?).each do |char|
     char.variations.each do |variant|
       EMOJICHAR_UNIFIED_MAP.merge! Hash[variant,char]
@@ -34,8 +33,8 @@ module EmojiData
   def self.chars(options={})
     options = {include_variants: false}.merge(options)
 
-    normals = EMOJI_CHARS.map { |c| c.char({variant_encoding: false}) }
-    extras  = self.all_with_variants.map { |c| c.char({variant_encoding: true}) }
+    normals = EMOJI_CHARS.map { |c| c.render({variant_encoding: false}) }
+    extras  = self.all_with_variants.map { |c| c.render({variant_encoding: true}) }
 
     if options[:include_variants]
       return normals + extras
@@ -53,21 +52,21 @@ module EmojiData
   end
 
   def self.char_to_unified(char)
-    char.codepoints.to_a.map {|i| i.to_s(16).rjust(4,'0')}.join('-').upcase
+    char.codepoints.to_a.map { |i| i.to_s(16).rjust(4,'0')}.join('-').upcase
   end
 
   def self.unified_to_char(cp)
     EmojiChar::unified_to_char(cp)
   end
 
-  def self.find_by_unified(cp)
+  def self.from_unified(cp)
     EMOJICHAR_UNIFIED_MAP[cp.upcase]
   end
 
   FBS_REGEXP = Regexp.new("(?:#{EmojiData.chars({include_variants: true}).join("|")})")
-  def self.find_by_str(str)
+  def self.scan(str)
     matches = str.scan(FBS_REGEXP)
-    matches.map { |m| EmojiData.find_by_unified(EmojiData.char_to_unified(m)) }
+    matches.map { |m| EmojiData.from_unified(EmojiData.char_to_unified(m)) }
   end
 
   def self.find_by_name(name)
@@ -76,6 +75,12 @@ module EmojiData
 
   def self.find_by_short_name(short_name)
     self.find_by_value(:short_name, short_name.downcase)
+  end
+
+  # alias old method names for legacy apps
+  class << self
+    alias_method :find_by_unified, :from_unified
+    alias_method :find_by_str, :scan
   end
 
   protected
