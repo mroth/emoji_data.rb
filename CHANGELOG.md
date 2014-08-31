@@ -12,6 +12,9 @@
    anything in your existing code.  This change is make things clearer for
    people new to the library.
 
+ * DEVELOPERS: Add benchmark suite for comparing method implementation time
+   across versions of this library.
+
 ## 0.1.0 (3 May 2014)
 
  * Add support for Unicode variant encodings, used by MacOSX 10.9 / iOS 7.
