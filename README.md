@@ -56,7 +56,11 @@ Some notable methods to call out:
 
 ```irb
 >> EmojiData.from_unified('1f680')
-=> #<EmojiData::EmojiChar:0x007f8fdba33b40 @variations=[], @name="ROCKET", @unified="1F680", @docomo=nil, @au="E5C8", @softbank="E10D", @google="FE7ED", @image="1f680.png", @sheet_x=25, @sheet_y=4, @short_name="rocket", @short_names=["rocket"], @text=nil, @apple_img=true, @hangouts_img=true, @twitter_img=true>
+=> #<EmojiData::EmojiChar:0x007f8fdba33b40 @variations=[], @name="ROCKET",
+@unified="1F680", @docomo=nil, @au="E5C8", @softbank="E10D", @google="FE7ED",
+@image="1f680.png", @sheet_x=25, @sheet_y=4, @short_name="rocket",
+@short_names=["rocket"], @text=nil, @apple_img=true, @hangouts_img=true,
+@twitter_img=true>
 ```
 
 `EmojiData.find_by_name(name)` and `.find_by_short_name(name)` do pretty much
@@ -64,7 +68,15 @@ what you'd expect:
 
 ```irb
 >> EmojiData.find_by_name('thumb')
-=> [#<EmojiData::EmojiChar:0x007f8fdb939780 @variations=[], @name="THUMBS UP SIGN", @unified="1F44D", @docomo="E727", @au="E4F9", @softbank="E00E", @google="FEB97", @image="1f44d.png", @sheet_x=13, @sheet_y=22, @short_name="+1", @short_names=["+1", "thumbsup"], @text=nil, @apple_img=true, @hangouts_img=true, @twitter_img=true>, #<EmojiData::EmojiChar:0x007f8fdb933510 @variations=[], @name="THUMBS DOWN SIGN", @unified="1F44E", @docomo="E700", @au="EAD5", @softbank="E421", @google="FEBA0", @image="1f44e.png", @sheet_x=13, @sheet_y=23, @short_name="-1", @short_names=["-1", "thumbsdown"], @text=nil, @apple_img=true, @hangouts_img=true, @twitter_img=true>]
+=> [#<EmojiData::EmojiChar:0x007f8fdb939780 @variations=[], @name="THUMBS UP
+SIGN", @unified="1F44D", @docomo="E727", @au="E4F9", @softbank="E00E",
+@google="FEB97", @image="1f44d.png", @sheet_x=13, @sheet_y=22, @short_name="+1",
+@short_names=["+1", "thumbsup"], @text=nil, @apple_img=true, @hangouts_img=true,
+@twitter_img=true>, #<EmojiData::EmojiChar:0x007f8fdb933510 @variations=[],
+@name="THUMBS DOWN SIGN", @unified="1F44E", @docomo="E700", @au="EAD5",
+@softbank="E421", @google="FEBA0", @image="1f44e.png", @sheet_x=13, @sheet_y=23,
+@short_name="-1", @short_names=["-1", "thumbsdown"], @text=nil, @apple_img=true,
+@hangouts_img=true, @twitter_img=true>]
 ```
 
 `EmojiData.char_to_unified(char)` takes a string containing a unified unicode
@@ -82,7 +94,8 @@ representation of an emoji character and gives you the unicode ID.
 ```irb
 #gimmie the shortname of all doublebyte chars
 >> EmojiData.all.select(&:doublebyte?).map(&:short_name)
-=> ["hash", "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "cn", "de", "es", "fr", "gb", "it", "jp", "kr", "ru", "us"]
+=> ["hash", "zero", "one", "two", "three", "four", "five", "six", "seven",
+"eight", "nine", "cn", "de", "es", "fr", "gb", "it", "jp", "kr", "ru", "us"]
 ```
 
 ### EmojiData::EmojiChar
