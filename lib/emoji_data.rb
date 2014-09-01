@@ -3,20 +3,28 @@ require 'emoji_data/emoji_char'
 require 'json'
 
 module EmojiData
-  GEM_ROOT = File.join(File.dirname(__FILE__), '..')
-  RAW_JSON = IO.read(File.join(GEM_ROOT, 'vendor/emoji-data/emoji.json'))
-  EMOJI_MAP = JSON.parse( RAW_JSON )
-  EMOJI_CHARS = EMOJI_MAP.map { |em| EmojiChar.new(em) }
 
-  #
-  # construct hashmap for fast precached lookups for `.from_unified`
-  #
-  EMOJICHAR_UNIFIED_MAP = Hash[EMOJI_CHARS.map { |u| [u.unified, u] }]
-  EMOJI_CHARS.select(&:variant?).each do |char|
-    char.variations.each do |variant|
-      EMOJICHAR_UNIFIED_MAP.merge! Hash[variant,char]
-    end
+  GEM_ROOT = File.join(File.dirname(__FILE__), '..')
+  VENDOR_DATA = 'vendor/emoji-data/emoji.json'
+
+  # precomputed list of all possible emoji characters
+  EMOJI_CHARS = begin
+    raw_json = IO.read(File.join(GEM_ROOT, VENDOR_DATA))
+    vendordata = JSON.parse( raw_json )
+    vendordata.map { |em| EmojiChar.new(em) }
   end
+
+  # precomputed hashmap for fast precached lookups
+  EMOJICHAR_UNIFIED_MAP = begin
+    results = Hash[EMOJI_CHARS.map { |u| [u.unified, u] }]
+    EMOJI_CHARS.select(&:variant?).each do |char|
+      char.variations.each do |variant|
+        results.merge! Hash[variant,char]
+      end
+    end
+    results
+  end
+  
 
   # Returns an array of all known EmojiChar.
   def self.all
@@ -112,5 +120,6 @@ module EmojiData
   def self.find_by_value(field,value)
     self.all.select { |char| char.send(field).include? value }
   end
+
 
 end
