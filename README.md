@@ -3,7 +3,6 @@
 [![Gem Version](http://img.shields.io/gem/v/emoji_data.svg?style=flat)](https://rubygems.org/gems/emoji_data)
 [![Build Status](http://img.shields.io/travis/mroth/emoji_data.rb.svg?style=flat)](https://travis-ci.org/mroth/emoji_data.rb)
 [![Dependency Status](http://img.shields.io/gemnasium/mroth/emoji_data.rb.svg?style=flat)](https://gemnasium.com/mroth/emoji_data.rb)
-[![CodeClimate Status](http://img.shields.io/codeclimate/github/mroth/emoji_data.rb.svg?style=flat)](https://codeclimate.com/github/mroth/emoji_data.rb)
 [![Coverage Status](http://img.shields.io/coveralls/mroth/emoji_data.rb.svg?style=flat)](https://coveralls.io/r/mroth/emoji_data.rb)
 
 Ruby library providing low level operations for dealing with Emoji
