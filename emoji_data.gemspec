@@ -26,5 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'benchmark-ips',  '~> 2.0.0'
   spec.add_development_dependency 'yard',           '~> 0.8.7.4'
 
-  spec.required_ruby_version = '>= 1.9.2'
+  spec.required_ruby_version = '>= 1.9.3'
 end
