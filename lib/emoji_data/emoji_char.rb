@@ -1,13 +1,42 @@
 module EmojiData
 
+  # EmojiChar represents a single Emoji character and its associated metadata.
+  #
+  # @!attribute name
+  #   @return [String] The standardized name used in the Unicode specification
+  #     to represent this emoji character.
+  #
+  # @!attribute unified
+  #   @return [String] The primary unified codepoint ID for the emoji character.
+  #
+  # @!attribute variations
+  #   @return [Array<String>] A list of all variant codepoints that may also
+  #     represent this emoji.
+  #
+  # @!attribute short_name
+  #   @return [String] The canonical "short name" or keyword used in many
+  #     systems to refer to this emoji. Often surrounded by `:colons:` in
+  #     systems like GitHub & Campfire.
+  #
+  # @!attribute short_names
+  #   @return [Array<String>] A full list of possible keywords for the emoji.
+  #
+  # @!attribute text
+  #   @return [String] An alternate textual representation of the emoji, for
+  #   example a smiley face emoji may be represented with an ASCII alternative.
+  #   Most emoji do not have a text alternative. This is typically used when
+  #   building an automatic translation from typed emoticons.
+  #
   class EmojiChar
+
     def initialize(emoji_hash)
       # work around inconsistency in emoji.json for now by just setting a blank
       # array for instance value, and let it get overriden in main
       # deserialization loop if variable is present.
       @variations = []
 
-      # http://stackoverflow.com/questions/1615190/declaring-instance-variables-iterating-over-a-hash
+      # trick for declaring instance variables while iterating over a hash
+      # http://stackoverflow.com/questions/1615190/
       emoji_hash.each do |k,v|
         instance_variable_set("@#{k}",v)
         eigenclass = class<<self; self; end
@@ -15,11 +44,18 @@ module EmojiData
       end
     end
 
-    # Returns a version of the character for rendering to screen.
+
+    # Renders an `EmojiChar` to its string glyph representation, suitable for
+    # printing to screen.
     #
-    # By default this will now use the variant encoding if it exists.
-    def render(options = {})
-      options = {variant_encoding: true}.merge(options)
+    # @option opts [Boolean] :variant_encoding specify whether the variant
+    #   encoding selector should be used to hint to rendering devices that
+    #   "graphic" representation should be used. By default, we use this for all
+    #   Emoji characters that contain a possible variant.
+    #
+    # @return [String] the emoji character rendered to a UTF-8 string
+    def render(opts = {})
+      options = {variant_encoding: true}.merge(opts)
       #decide whether to use the normal unified ID or the variant for encoding to str
       target = (self.variant? && options[:variant_encoding]) ? self.variant : @unified
       EmojiChar::unified_to_char(target)
@@ -28,9 +64,14 @@ module EmojiData
     alias_method :to_s, :render
     alias_method :char, :render
 
-    # Return ALL known possible string encodings of the emoji char.
+
+    # Returns a list of all possible UTF-8 string renderings of an `EmojiChar`.
     #
-    # Mostly useful for doing find operations when you need them all.
+    # E.g., normal, with variant selectors, etc. This is useful if you want to
+    # have all possible values to match against when searching for the emoji in
+    # a string representation.
+    #
+    # @return [Array<String>] all possible UTF-8 string renderings
     def chars
       results = [self.render({variant_encoding: false})]
       @variations.each do |variation|
@@ -39,19 +80,37 @@ module EmojiData
       @chars ||= results
     end
 
-    # Public: Is the character represented by a doublebyte unicode codepoint in unicode?
+
+    # Is the `EmojiChar` represented by a doublebyte codepoint in Unicode?
+    #
+    # @return [Boolean]
     def doublebyte?
       @unified.include? "-"
     end
 
-    # does the emojichar have an alternate variant encoding?
+
+    # Does the `EmojiChar` have an alternate Unicode variant encoding?
+    #
+    # @return [Boolean]
     def variant?
       @variations.length > 0
     end
 
-    # return whatever is the most likely variant ID for the emojichar
-    # for now, there can only be one, so just return first.
-    # (in the future, there may be multiple variants, who knows!)
+
+    # Returns the most likely variant-encoding codepoint ID for an `EmojiChar`.
+    #
+    # For now we only know of one possible variant encoding for certain
+    # characters, but there could be others in the future.
+    #
+    # This is typically used to force Emoji rendering for characters that could
+    # be represented in standard font glyphs on certain operating systems.
+    #
+    # The resulting encoded string will be two codepoints, or three codepoints
+    # for doublebyte Emoji characters.
+    #
+    # @return [String, nil]
+    #   The most likely variant-encoding codepoint ID.
+    #   If there is no variant-encoding for a character, returns nil.
     def variant
       @variations.first
     end

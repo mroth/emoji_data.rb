@@ -12,6 +12,7 @@
    anything in your existing code.  This change is make things clearer for
    people new to the library.
 
+ * DEVELOPERS: Internal code cleanup and better comments.
  * DEVELOPERS: Add benchmark suite for comparing method implementation time
    across versions of this library.
 

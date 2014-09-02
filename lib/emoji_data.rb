@@ -4,6 +4,7 @@ require 'json'
 
 module EmojiData
 
+  # specify some location paths
   GEM_ROOT = File.join(File.dirname(__FILE__), '..')
   VENDOR_DATA = 'vendor/emoji-data/emoji.json'
 
@@ -24,26 +25,51 @@ module EmojiData
     end
     results
   end
-  
 
-  # Returns an array of all known EmojiChar.
+  # our constants are only for usage internally
+  private_constant :GEM_ROOT, :VENDOR_DATA, :EMOJI_CHARS, :EMOJICHAR_UNIFIED_MAP
+
+
+  # Returns a list of all known Emoji characters as `EmojiChar` objects.
+  #
+  # @return [Array<EmojiChar>] a list of all known `EmojiChar`.
   def self.all
     EMOJI_CHARS
   end
 
-  # Returns an array of all EmojiChar that are doublebyte encoded.
+
+  # Returns a list of all `EmojiChar` that are represented with doublebyte
+  # encoding.
+  #
+  # @return [Array<EmojiChar>] a list of all doublebyte `EmojiChar`.
   def self.all_doublebyte
     EMOJI_CHARS.select(&:doublebyte?)
   end
 
-  # Returns an array of all EmojiChar that have Unicode variant encoding.
+
+  # Returns a list of all `EmojiChar` that have at least one variant encoding.
+  #
+  # @return [Array<EmojiChar>] a list of all `EmojiChar` with variant encoding.
   def self.all_with_variants
     EMOJI_CHARS.select(&:variant?)
   end
 
-  # An array of all known emoji chars rendered as UTF-8 strings.
-  def self.chars(options={})
-    options = {include_variants: false}.merge(options)
+
+  # Returns a list of all known Emoji characters rendered as UTF-8 strings.
+  #
+  # By default, the default rendering options for this library will be used.
+  # However, if you pass an option hash with `include_variants: true` then all
+  # possible renderings of a single glyph will be included, meaning that:
+  #
+  # 1. You will have "duplicate" emojis in your list.
+  # 2. This list is now suitable for exhaustably matching against in a search.
+  #
+  # @option opts [Boolean] :include_variants whether or not to include all
+  #   possible encoding variants in the list
+  #
+  # @return [Array<String>] all Emoji characters rendered as UTF-8 strings
+  def self.chars(opts={})
+    options = {include_variants: false}.merge(opts)
 
     normals = EMOJI_CHARS.map { |c| c.render({variant_encoding: false}) }
 
@@ -54,9 +80,12 @@ module EmojiData
     normals
   end
 
-  # An array of all known emoji glyph codepoints.
-  def self.codepoints(options={})
-    options = {include_variants: false}.merge(options)
+  # Returns a list of all known codepoints representing Emoji characters.
+  #
+  # @option (see .chars)
+  # @return [Array<String>] all codepoints represented as unified ID strings
+  def self.codepoints(opts={})
+    options = {include_variants: false}.merge(opts)
 
     normals = EMOJI_CHARS.map(&:unified)
 
@@ -67,48 +96,85 @@ module EmojiData
     normals
   end
 
-  # Convert a native string glyph to a unified ID.
+  # Convert a native UTF-8 string glyph to its unified codepoint ID.
   #
   # This is a conversion operation, not a match, so it may produce unexpected
   # results with different types of values.
+  #
+  # @param char [String] a single rendered emoji glyph encoded as a UTF-8 string
+  # @return [String] the unified ID
+  #
+  # @example
+  #   >> Exmoji.unified_to_char("1F47E")
+  #   => "👾"
   def self.char_to_unified(char)
     char.codepoints.to_a.map { |i| i.to_s(16).rjust(4,'0')}.join('-').upcase
   end
 
-  # Convert a unified codepoint ID to the UTF-8 string representation.
+
+  # Convert a unified codepoint ID directly to its UTF-8 string representation.
   #
-  # @param [String] uid the unified codepoint ID for an emoji
-  # @return [String] UTF-8 string representation of the emoji glyph
-  def self.unified_to_char(cp)
-    EmojiChar::unified_to_char(cp)
+  # @param uid [String] the unified codepoint ID for an emoji
+  # @return [String] UTF-8 string rendering of the emoji character
+  #
+  # @example
+  #   >> EmojiData.char_to_unified("👾")
+  #   => "1F47E"
+  def self.unified_to_char(uid)
+    EmojiChar::unified_to_char(uid)
   end
 
-  # Find a specific EmojiChar by its unified ID.
-  def self.from_unified(cp)
-    EMOJICHAR_UNIFIED_MAP[cp.upcase]
+
+  # Finds a specific `EmojiChar` based on its unified codepoint ID.
+  #
+  # @param uid [String] the unified codepoint ID for an emoji
+  # @return [EmojiChar]
+  def self.from_unified(uid)
+    EMOJICHAR_UNIFIED_MAP[uid.upcase]
   end
 
-  # Search a string for all EmojiChars contained within.
-  #
-  # Returns an array of all EmojiChars contained within that string, in order.
+  # precompile regex patternf or fast matches in `.scan`
   FBS_REGEXP = Regexp.new("(?:#{EmojiData.chars({include_variants: true}).join("|")})")
+  private_constant :FBS_REGEXP
+
+  # Scans a string for all encoded emoji characters contained within.
+  #
+  # @param str [String] the target string to search
+  # @return [Array<EmojiChar>] all emoji characters contained within the target
+  #    string, in the order they appeared.
+  #
+  # @example
+  #   >> EmojiData.scan("flying on my 🚀 to visit the 👾 people.")
+  #   => [#<EmojiData::EmojiChar... @name="ROCKET", @unified="1F680", ...>,
+  #   #<EmojiData::EmojiChar... @name="ALIEN MONSTER", @unified="1F47E", ...>]
   def self.scan(str)
     matches = str.scan(FBS_REGEXP)
     matches.map { |m| EmojiData.from_unified(EmojiData.char_to_unified(m)) }
   end
 
-  # Find all EmojiChars that match a contain substring in their official name.
+
+  # Finds any `EmojiChar` that contains given string in its official name.
+  #
+  # @param name [String]
+  # @return [Array<EmojiChar>]
   def self.find_by_name(name)
     self.find_by_value(:name, name.upcase)
   end
 
-  # Find all EmojiChars that match a contain substring in their short name.
+
+  # Find all `EmojiChar` that match string in any of their associated short
+  # name keywords.
+  #
+  # @param short_name [String]
+  # @return [Array<EmojiChar>]
   def self.find_by_short_name(short_name)
     self.find_by_value(:short_name, short_name.downcase)
   end
 
+
   # TODO: port over .from_shortname from NodeJS version
   # needs to be added to benchmarks for all versions too!
+
 
   # alias old method names for legacy apps
   class << self
@@ -116,7 +182,9 @@ module EmojiData
     alias_method :find_by_str, :scan
   end
 
+
   protected
+
   def self.find_by_value(field,value)
     self.all.select { |char| char.send(field).include? value }
   end
