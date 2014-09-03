@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require './lib/emoji_data'
 require 'benchmark/ips'
 
