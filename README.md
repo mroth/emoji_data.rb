@@ -85,6 +85,13 @@ Found some cloud!
 => [...]
 ```
 
+## Contributing
+
+Please be sure to run `rake spec` and help keep test coverage at :100:.
+
+There is a full benchmark suite available via `scripts/benchmark.rb`.  Please
+run before and after your changes to ensure you have not caused a performance
+regression.
 
 ## License
 
