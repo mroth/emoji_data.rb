@@ -105,7 +105,7 @@ module EmojiData
   # @return [String] the unified ID
   #
   # @example
-  #   >> Exmoji.unified_to_char("1F47E")
+  #   >> EmojiData.unified_to_char("1F47E")
   #   => "👾"
   def self.char_to_unified(char)
     char.codepoints.to_a.map { |i| i.to_s(16).rjust(4,'0')}.join('-').upcase
@@ -133,7 +133,7 @@ module EmojiData
     EMOJICHAR_UNIFIED_MAP[uid.upcase]
   end
 
-  # precompile regex patternf or fast matches in `.scan`
+  # precompile regex pattern for fast matches in `.scan`
   FBS_REGEXP = Regexp.new("(?:#{EmojiData.chars({include_variants: true}).join("|")})")
   private_constant :FBS_REGEXP
 
