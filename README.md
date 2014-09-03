@@ -37,7 +37,7 @@ Or install it yourself as:
 
     $ gem install emoji_data
 
-Currently requires `RUBY_VERSION >= 1.9.2`.
+Currently requires `RUBY_VERSION >= 1.9.3`.
 
 ## Example Usage
 
@@ -109,3 +109,7 @@ getter methods.
 There are some additional convenience methods, such as `#doublebyte?` etc. Most
 important addition is the `#render` method which will output a properly unicode
 encoded string containing the character.
+
+## License
+
+[The MIT License (MIT)](LICENSE)
