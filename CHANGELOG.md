@@ -4,14 +4,15 @@
 
  * Rename a number of methods to be clearer and more consistent with that they
    actually do:
-     - `EmojiChar.char` → `EmojiChar.render`
-     - `EmojiData.find_by_unified` → `EmojiData.from_unified`
-     - `EmojiData.find_by_str` → `EmojiData.scan`
+     - `EmojiChar.char()` → `EmojiChar.render()`
+     - `EmojiData.find_by_unified()` → `EmojiData.from_unified()`
+     - `EmojiData.find_by_str()` → `EmojiData.scan()`
 
    Don't worry, the old names are still aliased in so you don't have to change
    anything in your existing code.  This change is make things clearer for
    people new to the library.
 
+ * Add new `.from_short_name()` library method for fast keyword lookups.
  * DEVELOPERS: Internal code cleanup and better comments.
  * DEVELOPERS: Add benchmark suite for comparing method implementation time
    across versions of this library.

@@ -15,7 +15,7 @@ module EmojiData
     vendordata.map { |em| EmojiChar.new(em) }
   end
 
-  # precomputed hashmap for fast precached lookups
+  # precomputed hashmap for fast precached lookups in .from_unified
   EMOJICHAR_UNIFIED_MAP = begin
     results = Hash[EMOJI_CHARS.map { |u| [u.unified, u] }]
     EMOJI_CHARS.select(&:variant?).each do |char|
@@ -26,8 +26,16 @@ module EmojiData
     results
   end
 
+  # precomputed hashmap for fast precached lookups in .from_short_name
+  EMOJICHAR_KEYWORD_MAP = {}
+  EMOJI_CHARS.each do |ec|
+    ec.short_names.each { |keyword| EMOJICHAR_KEYWORD_MAP[keyword] = ec }
+  end
+
+
   # our constants are only for usage internally
-  private_constant :GEM_ROOT, :VENDOR_DATA, :EMOJI_CHARS, :EMOJICHAR_UNIFIED_MAP
+  private_constant :GEM_ROOT, :VENDOR_DATA
+  private_constant :EMOJI_CHARS, :EMOJICHAR_UNIFIED_MAP, :EMOJICHAR_KEYWORD_MAP
 
 
   # Returns a list of all known Emoji characters as `EmojiChar` objects.
@@ -171,10 +179,15 @@ module EmojiData
     self.find_by_value(:short_name, short_name.downcase)
   end
 
-
-  # TODO: port over .from_shortname from NodeJS version
-  # needs to be added to benchmarks for all versions too!
-
+  # Finds a specific `EmojiChar` based on the unified codepoint ID.
+  #
+  # Must be exact match.
+  #
+  # @param short_name [String]
+  # @return [EmojiChar]
+  def self.from_short_name(short_name)
+    EMOJICHAR_KEYWORD_MAP[short_name.downcase]
+  end
 
   # alias old method names for legacy apps
   class << self

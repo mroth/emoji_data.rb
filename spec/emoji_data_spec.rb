@@ -141,6 +141,25 @@ describe EmojiData do
     end
   end
 
+  describe ".from_short_name" do
+    it "returns exact matches on a short name" do
+      results = EmojiData.from_short_name('scream')
+      results.should be_kind_of(EmojiChar)
+      results.name.should eq('FACE SCREAMING IN FEAR')
+    end
+    it "handles lowercasing input if required" do
+      EmojiData.from_short_name('SCREAM').should eq( EmojiData.from_short_name('scream') )
+    end
+    it "works on secondary keywords" do
+      primary = EmojiData.from_short_name('hankey')
+      EmojiData.from_short_name('poop').should eq(primary)
+      EmojiData.from_short_name('shit').should eq(primary)
+    end
+    it "returns nil if nothing matches" do
+      EmojiData.from_short_name('taco').should be_nil
+    end
+  end
+
   describe ".char_to_unified" do
     it "converts normal emoji to unified codepoint" do
       EmojiData.char_to_unified("👾").should eq('1F47E')
