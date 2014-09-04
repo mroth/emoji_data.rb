@@ -16,14 +16,10 @@ module EmojiData
   end
 
   # precomputed hashmap for fast precached lookups in .from_unified
-  EMOJICHAR_UNIFIED_MAP = begin
-    results = Hash[EMOJI_CHARS.map { |u| [u.unified, u] }]
-    EMOJI_CHARS.select(&:variant?).each do |char|
-      char.variations.each do |variant|
-        results.merge! Hash[variant,char]
-      end
-    end
-    results
+  EMOJICHAR_UNIFIED_MAP = {}
+  EMOJI_CHARS.each do |ec|
+    EMOJICHAR_UNIFIED_MAP[ec.unified] = ec
+    ec.variations.each  { |variant| EMOJICHAR_UNIFIED_MAP[variant] = ec }
   end
 
   # precomputed hashmap for fast precached lookups in .from_short_name
@@ -31,7 +27,6 @@ module EmojiData
   EMOJI_CHARS.each do |ec|
     ec.short_names.each { |keyword| EMOJICHAR_KEYWORD_MAP[keyword] = ec }
   end
-
 
   # our constants are only for usage internally
   private_constant :GEM_ROOT, :VENDOR_DATA
