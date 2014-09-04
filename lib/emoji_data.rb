@@ -132,7 +132,10 @@ module EmojiData
   end
 
   # precompile regex pattern for fast matches in `.scan`
-  FBS_REGEXP = Regexp.new("(?:#{EmojiData.chars({include_variants: true}).join("|")})")
+  # needs to be defined after self.chars so not at top of file for now...
+  FBS_REGEXP = Regexp.new(
+    "(?:#{EmojiData.chars({include_variants: true}).join("|")})"
+  )
   private_constant :FBS_REGEXP
 
   # Scans a string for all encoded emoji characters contained within.
