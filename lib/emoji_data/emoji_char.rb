@@ -44,7 +44,6 @@ module EmojiData
       end
     end
 
-
     # Renders an `EmojiChar` to its string glyph representation, suitable for
     # printing to screen.
     #
@@ -64,7 +63,6 @@ module EmojiData
     alias_method :to_s, :render
     alias_method :char, :render
 
-
     # Returns a list of all possible UTF-8 string renderings of an `EmojiChar`.
     #
     # E.g., normal, with variant selectors, etc. This is useful if you want to
@@ -80,7 +78,6 @@ module EmojiData
       @chars ||= results
     end
 
-
     # Is the `EmojiChar` represented by a doublebyte codepoint in Unicode?
     #
     # @return [Boolean]
@@ -88,14 +85,12 @@ module EmojiData
       @unified.include? "-"
     end
 
-
     # Does the `EmojiChar` have an alternate Unicode variant encoding?
     #
     # @return [Boolean]
     def variant?
       @variations.length > 0
     end
-
 
     # Returns the most likely variant-encoding codepoint ID for an `EmojiChar`.
     #
@@ -117,10 +112,10 @@ module EmojiData
 
 
     protected
+
     def self.unified_to_char(cps)
       cps.split('-').map { |i| i.hex }.pack("U*")
     end
 
   end
-
 end

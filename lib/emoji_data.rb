@@ -40,7 +40,6 @@ module EmojiData
     EMOJI_CHARS
   end
 
-
   # Returns a list of all `EmojiChar` that are represented with doublebyte
   # encoding.
   #
@@ -49,14 +48,12 @@ module EmojiData
     EMOJI_CHARS.select(&:doublebyte?)
   end
 
-
   # Returns a list of all `EmojiChar` that have at least one variant encoding.
   #
   # @return [Array<EmojiChar>] a list of all `EmojiChar` with variant encoding.
   def self.all_with_variants
     EMOJI_CHARS.select(&:variant?)
   end
-
 
   # Returns a list of all known Emoji characters rendered as UTF-8 strings.
   #
@@ -114,7 +111,6 @@ module EmojiData
     char.codepoints.to_a.map { |i| i.to_s(16).rjust(4,'0')}.join('-').upcase
   end
 
-
   # Convert a unified codepoint ID directly to its UTF-8 string representation.
   #
   # @param uid [String] the unified codepoint ID for an emoji
@@ -126,7 +122,6 @@ module EmojiData
   def self.unified_to_char(uid)
     EmojiChar::unified_to_char(uid)
   end
-
 
   # Finds a specific `EmojiChar` based on its unified codepoint ID.
   #
@@ -155,7 +150,6 @@ module EmojiData
     matches.map { |m| EmojiData.from_unified(EmojiData.char_to_unified(m)) }
   end
 
-
   # Finds any `EmojiChar` that contains given string in its official name.
   #
   # @param name [String]
@@ -163,7 +157,6 @@ module EmojiData
   def self.find_by_name(name)
     self.find_by_value(:name, name.upcase)
   end
-
 
   # Find all `EmojiChar` that match string in any of their associated short
   # name keywords.
@@ -196,6 +189,5 @@ module EmojiData
   def self.find_by_value(field,value)
     self.all.select { |char| char.send(field).include? value }
   end
-
 
 end
