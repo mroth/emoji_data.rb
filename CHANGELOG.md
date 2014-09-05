@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0 (TBD)
+## 0.2.0 (5 September 2014)
 
  * Rename a number of methods to be clearer and more consistent with that they
    actually do:
