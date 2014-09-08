@@ -19,9 +19,13 @@ realize the nightmare of [doublebyte encoding][doublebyte] or
 EmojiData is used in production by [Emojitracker.com][emojitracker] to parse
 well over 100M+ emoji glyphs daily. :dizzy:
 
+Don't like Ruby? This library has also now been ported to [NodeJS][node] and [Elixir][ex].
+
 [doublebyte]: http://www.quora.com/Why-does-using-emoji-reduce-my-SMS-character-limit-to-70
 [variant]: http://www.unicode.org/L2/L2011/11438-emoji-var.pdf
 [emojitracker]: http://www.emojitracker.com
+[node]: https://github.com/mroth/emoji-data-js
+[ex]: https://github.com/mroth/exmoji
 
 ## Installation
 
