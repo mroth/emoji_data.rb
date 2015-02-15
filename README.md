@@ -48,7 +48,7 @@ Currently requires `RUBY_VERSION >= 1.9.3`.
 
 ### Documentation
 Full API documentation is available via YARD or here:
-http://rubydoc.info/github/mroth/emoji_data.rb/master/frames
+http://www.rubydoc.info/gems/emoji_data
 
 ### Examples
 Here are some examples of the type of stuff you can do:
