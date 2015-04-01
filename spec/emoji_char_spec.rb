@@ -68,6 +68,7 @@ describe EmojiChar do
       it "should return an array of all possible string render variations" do
         @invader.chars.should eq(["\u{1F47E}"])
         @cloud.chars.should   eq(["\u{2601}","\u{2601}\u{FE0F}"])
+        @ear.chars.should eq(["\u{1F442}", "\u{1F442}\u{1F3FF}"])
       end
     end
 
