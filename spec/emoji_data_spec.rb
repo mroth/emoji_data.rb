@@ -4,7 +4,7 @@ require 'spec_helper'
 describe EmojiData do
   describe ".all" do
     it "should return an array of all 845 known emoji chars" do
-      EmojiData.all.count.should eq(845)
+      EmojiData.all.count.should eq(900)
     end
     it "should return all EmojiChar objects" do
       EmojiData.all.all? {|char| char.class == EmojiData::EmojiChar}.should be_true
@@ -13,13 +13,13 @@ describe EmojiData do
 
   describe ".all_doublebyte" do
     it "should return an array of all 21 known emoji chars with doublebyte encoding" do
-      EmojiData.all_doublebyte.count.should eq(21)
+      EmojiData.all_doublebyte.count.should eq(71)
     end
   end
 
   describe ".all_with_variants" do
     it "should return an array of all 107 known emoji chars with variant encodings" do
-      EmojiData.all_with_variants.count.should eq(107)
+      EmojiData.all_with_variants.count.should eq(116)
     end
   end
 
@@ -45,14 +45,14 @@ describe EmojiData do
   describe ".codepoints" do
     it "should return an array of all known codepoints in dashed string representation" do
       EmojiData.codepoints.all? {|cp| cp.class == String}.should be_true
-      EmojiData.codepoints.all? {|cp| cp.match(/^[0-9A-F\-]{4,11}$/)}.should be_true
+      EmojiData.codepoints.all? {|cp| cp.match(/^[0-9A-F\-]{4,42}$/)}.should be_true
     end
     it "should include variants in list when options {include_variants: true}" do
       results = EmojiData.codepoints({include_variants: true})
       numChars    = EmojiData.all.count
       numVariants = EmojiData.all_with_variants.count
       results.count.should eq(numChars + numVariants)
-      results.all? {|cp| cp.match(/^[0-9A-F\-]{4,16}$/)}.should be_true
+      results.all? {|cp| cp.match(/^[0-9A-F\-]{4,42}$/)}.should be_true
     end
   end
 
