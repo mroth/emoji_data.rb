@@ -30,6 +30,7 @@ describe EmojiChar do
       @usflag    = EmojiChar.new({'unified' => '1F1FA-1F1F8'})
       @hourglass = EmojiChar.new({'unified' => '231B', 'variations' => ['231B-FE0F']})
       @cloud     = EmojiChar.new({'unified' => '2601', 'variations' => ['2601-FE0F']})
+      @ear       = EmojiChar.new({'unified' => '1F442', 'skin_variations' => { '1F442-1F3FF' => { 'unified' => '1F442-1F3FF' }}})
     end
 
     describe "#to_s" do
@@ -80,6 +81,13 @@ describe EmojiChar do
     describe "#variant?" do
       it "should indicate when a character has an alternate variant encoding" do
         @hourglass.variant?.should be_true
+        @usflag.variant?.should be_false
+      end
+    end
+
+    describe "#skin_variant?" do
+      it "should indicate when a character has a skin variant encoding" do
+        @ear.skin_variant?.should be_true
         @usflag.variant?.should be_false
       end
     end

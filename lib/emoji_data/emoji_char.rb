@@ -34,15 +34,23 @@ module EmojiData
       # array for instance value, and let it get overriden in main
       # deserialization loop if variable is present.
       @variations = []
+      @skin_variations = []
 
       # trick for declaring instance variables while iterating over a hash
       # http://stackoverflow.com/questions/1615190/
       emoji_hash.each do |k,v|
+        if v.kind_of?(Hash)
+          v = v.map do |_, variation|
+            EmojiChar.new(variation)
+          end
+        end
         instance_variable_set("@#{k}",v)
         eigenclass = class<<self; self; end
         eigenclass.class_eval { attr_reader k }
       end
     end
+
+    attr_reader :skin_variations
 
     # Renders an `EmojiChar` to its string glyph representation, suitable for
     # printing to screen.
@@ -75,6 +83,9 @@ module EmojiData
       @variations.each do |variation|
         results << EmojiChar::unified_to_char(variation)
       end
+      @skin_variations.each do |skin_variation|
+        results += skin_variation.chars
+      end
       @chars ||= results
     end
 
@@ -90,6 +101,13 @@ module EmojiData
     # @return [Boolean]
     def variant?
       @variations.length > 0
+    end
+
+    # Does the `EmojiChar` have an alternate skin variant encoding?
+    #
+    # @return [Boolean]
+    def skin_variant?
+      @skin_variations.length > 0
     end
 
     # Returns the most likely variant-encoding codepoint ID for an `EmojiChar`.
