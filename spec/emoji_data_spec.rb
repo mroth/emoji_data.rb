@@ -93,6 +93,9 @@ describe EmojiData do
       @variant_multi[0].name.should eq('HASH KEY')
       @variant_multi[1].name.should eq('ROCKET')
     end
+    it "should match combined emojis" do
+      EmojiData.scan("👩‍❤️‍👩").size.should eq(1)
+    end
   end
 
   describe ".find_by_str - DEPRECATED" do
