@@ -20,6 +20,7 @@ module EmojiData
   EMOJI_CHARS.each do |ec|
     EMOJICHAR_UNIFIED_MAP[ec.unified] = ec
     ec.variations.each  { |variant| EMOJICHAR_UNIFIED_MAP[variant] = ec }
+    ec.skin_variations.each  { |skin_variant| EMOJICHAR_UNIFIED_MAP[skin_variant.unified] = skin_variant }
   end
 
   # precomputed hashmap for fast precached lookups in .from_short_name
@@ -53,6 +54,13 @@ module EmojiData
   # @return [Array<EmojiChar>] a list of all `EmojiChar` with variant encoding.
   def self.all_with_variants
     EMOJI_CHARS.select(&:variant?)
+  end
+
+  # Returns a list of all `EmojiChar` that have at least one skin variant encoding.
+  #
+  # @return [Array<EmojiChar>] a list of all `EmojiChar` with skin variant encoding.
+  def self.all_with_skin_variants
+    EMOJI_CHARS.select(&:skin_variant?)
   end
 
   # Returns a list of all known Emoji characters rendered as UTF-8 strings.
@@ -134,7 +142,7 @@ module EmojiData
   # precompile regex pattern for fast matches in `.scan`
   # needs to be defined after self.chars so not at top of file for now...
   FBS_REGEXP = Regexp.new(
-    "(?:#{EmojiData.chars({include_variants: true}).join("|")})"
+    "(?:#{EmojiData.chars({include_variants: true}).sort_by(&:length).reverse.join("|")})"
   )
   private_constant :FBS_REGEXP
 

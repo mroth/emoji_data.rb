@@ -3,8 +3,8 @@ require 'spec_helper'
 
 describe EmojiData do
   describe ".all" do
-    it "should return an array of all 845 known emoji chars" do
-      EmojiData.all.count.should eq(845)
+    it "should return an array of all 901 known emoji chars" do
+      EmojiData.all.count.should eq(901)
     end
     it "should return all EmojiChar objects" do
       EmojiData.all.all? {|char| char.class == EmojiData::EmojiChar}.should be_true
@@ -12,14 +12,20 @@ describe EmojiData do
   end
 
   describe ".all_doublebyte" do
-    it "should return an array of all 21 known emoji chars with doublebyte encoding" do
-      EmojiData.all_doublebyte.count.should eq(21)
+    it "should return an array of all 72 known emoji chars with doublebyte encoding" do
+      EmojiData.all_doublebyte.count.should eq(72)
     end
   end
 
   describe ".all_with_variants" do
-    it "should return an array of all 107 known emoji chars with variant encodings" do
-      EmojiData.all_with_variants.count.should eq(107)
+    it "should return an array of all 116 known emoji chars with variant encodings" do
+      EmojiData.all_with_variants.count.should eq(116)
+    end
+  end
+
+  describe ".all_with_skin_variants" do
+    it "should return an array of all 57 known emoji chars with skin variations" do
+      EmojiData.all_with_skin_variants.count.should eq(57)
     end
   end
 
@@ -45,14 +51,14 @@ describe EmojiData do
   describe ".codepoints" do
     it "should return an array of all known codepoints in dashed string representation" do
       EmojiData.codepoints.all? {|cp| cp.class == String}.should be_true
-      EmojiData.codepoints.all? {|cp| cp.match(/^[0-9A-F\-]{4,11}$/)}.should be_true
+      EmojiData.codepoints.all? {|cp| cp.match(/^[0-9A-F\-]{4,42}$/)}.should be_true
     end
     it "should include variants in list when options {include_variants: true}" do
       results = EmojiData.codepoints({include_variants: true})
       numChars    = EmojiData.all.count
       numVariants = EmojiData.all_with_variants.count
       results.count.should eq(numChars + numVariants)
-      results.all? {|cp| cp.match(/^[0-9A-F\-]{4,16}$/)}.should be_true
+      results.all? {|cp| cp.match(/^[0-9A-F\-]{4,42}$/)}.should be_true
     end
   end
 
@@ -87,6 +93,9 @@ describe EmojiData do
       @variant_multi[0].name.should eq('HASH KEY')
       @variant_multi[1].name.should eq('ROCKET')
     end
+    it "should match combined emojis" do
+      EmojiData.scan("👩‍❤️‍👩").size.should eq(1)
+    end
   end
 
   describe ".find_by_str - DEPRECATED" do
@@ -108,6 +117,10 @@ describe EmojiData do
       results = EmojiData.from_unified('2764-fe0f')
       results.should_not be_nil
       results.name.should eq('HEAVY BLACK HEART')
+    end
+    it "should find skin variants as well" do
+      results = EmojiData.from_unified('1f442-1f3ff')
+      results.should_not be_nil
     end
   end
 
