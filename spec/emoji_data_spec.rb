@@ -3,8 +3,8 @@ require 'spec_helper'
 
 describe EmojiData do
   describe ".all" do
-    it "should return an array of all 845 known emoji chars" do
-      EmojiData.all.count.should eq(845)
+    it "should return an array of all 1299 known emoji chars" do
+      EmojiData.all.count.should eq(1299)
     end
     it "should return all EmojiChar objects" do
       EmojiData.all.all? {|char| char.class == EmojiData::EmojiChar}.should be_true
@@ -12,14 +12,14 @@ describe EmojiData do
   end
 
   describe ".all_doublebyte" do
-    it "should return an array of all 21 known emoji chars with doublebyte encoding" do
-      EmojiData.all_doublebyte.count.should eq(21)
+    it "should return an array of all 287 known emoji chars with doublebyte encoding" do
+      EmojiData.all_doublebyte.count.should eq(287)
     end
   end
 
   describe ".all_with_variants" do
-    it "should return an array of all 107 known emoji chars with variant encodings" do
-      EmojiData.all_with_variants.count.should eq(107)
+    it "should return an array of all 117 known emoji chars with variant encodings" do
+      EmojiData.all_with_variants.count.should eq(117)
     end
   end
 
@@ -45,14 +45,14 @@ describe EmojiData do
   describe ".codepoints" do
     it "should return an array of all known codepoints in dashed string representation" do
       EmojiData.codepoints.all? {|cp| cp.class == String}.should be_true
-      EmojiData.codepoints.all? {|cp| cp.match(/^[0-9A-F\-]{4,11}$/)}.should be_true
+      EmojiData.codepoints.all? {|cp| cp.match(/^[0-9A-F\-]{4,47}$/)}.should be_true
     end
     it "should include variants in list when options {include_variants: true}" do
       results = EmojiData.codepoints({include_variants: true})
       numChars    = EmojiData.all.count
       numVariants = EmojiData.all_with_variants.count
       results.count.should eq(numChars + numVariants)
-      results.all? {|cp| cp.match(/^[0-9A-F\-]{4,16}$/)}.should be_true
+      results.all? {|cp| cp.match(/^[0-9A-F\-]{4,47}$/)}.should be_true
     end
   end
 
@@ -62,6 +62,7 @@ describe EmojiData do
       @multi_results   = EmojiData.scan("flying on my 🚀 to visit the 👾 people.")
       @variant_results = EmojiData.scan("\u{0023}\u{FE0F}\u{20E3}")
       @variant_multi   = EmojiData.scan("first a \u{0023}\u{FE0F}\u{20E3} then a 🚀")
+      @skin_variant    = EmojiData.scan("🙇🏼")
     end
     it "should find the proper EmojiChar object from a single string char" do
       @exact_results.should be_kind_of(Array)
@@ -86,6 +87,11 @@ describe EmojiData do
     it "should return multiple matches in the proper order for variant encodings" do
       @variant_multi[0].name.should eq('HASH KEY')
       @variant_multi[1].name.should eq('ROCKET')
+    end
+    it "should return multiple matches on skin variants until PR #2 is merged" do
+      @skin_variant.length.should eq(2)
+      @skin_variant[0].name.should eq('PERSON BOWING DEEPLY')
+      @skin_variant[1].name.should eq('EMOJI MODIFIER FITZPATRICK TYPE-3')
     end
   end
 
@@ -155,8 +161,11 @@ describe EmojiData do
       EmojiData.from_short_name('poop').should eq(primary)
       EmojiData.from_short_name('shit').should eq(primary)
     end
+    it "matches unicode 8.0 emoji" do
+      EmojiData.from_short_name('taco').should_not be_nil
+    end
     it "returns nil if nothing matches" do
-      EmojiData.from_short_name('taco').should be_nil
+      EmojiData.from_short_name('bacon').should be_nil
     end
   end
 
