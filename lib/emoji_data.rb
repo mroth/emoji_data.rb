@@ -134,7 +134,7 @@ module EmojiData
   # precompile regex pattern for fast matches in `.scan`
   # needs to be defined after self.chars so not at top of file for now...
   FBS_REGEXP = Regexp.new(
-    "(?:#{EmojiData.chars({include_variants: true}).join("|")})"
+    "(?:#{EmojiData.chars({include_variants: true}).map { |c| Regexp.escape(c) }.join("|")})"
   )
   private_constant :FBS_REGEXP
 
