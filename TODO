@@ -1,0 +1,18 @@
+ {"name"=>"REGIONAL INDICATOR SYMBOL LETTERS RU", "unified"=>"1F1F7-1F1FA", "variations"=>[], "docomo"=>nil, "au"=>"E5D6", "softbank"=>"E512", "google"=>"FE4EC", "image"=>"1f1f7-1f1fa.png", "sheet_x"=>28, "sheet_y"=>3, "short_name"=>"ru", "short_names"=>["ru"], "text"=>nil, "apple_img"=>true, "hangouts_img"=>false, "twitter_img"=>true}
+
+name    => @name
+unified => @unified
+variations => []
+short_name => <some unique id for each emoji> 
+short_names => [short_name]
+docomo    => X
+au        => X
+softbank  => X
+google    => X
+image     => X
+sheet_x   => X
+sheet_y   => X
+text      =>  X
+apple_img => X
+hangouts_img => X
+twitter_img  => X
